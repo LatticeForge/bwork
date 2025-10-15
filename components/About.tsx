@@ -25,18 +25,6 @@ export default function About() {
                 className="w-full h-auto object-cover"
               />
             </div>
-
-            {/* Stats Card with glassmorphism */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="absolute -bottom-8 -right-8 bg-gradient-to-br from-accent to-primary-600 text-white rounded-2xl p-6 shadow-glow-lg"
-            >
-              <div className="text-4xl font-bold mb-1">12+</div>
-              <div className="text-sm opacity-90">Years of IT Excellence</div>
-            </motion.div>
           </motion.div>
 
           {/* Right - Content */}

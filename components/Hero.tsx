@@ -77,27 +77,6 @@ export default function Hero() {
                 </svg>
               </Link>
             </motion.div>
-
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              className="grid grid-cols-3 gap-6 mt-12 pt-12 border-t border-secondary-200"
-            >
-              {[
-                { number: '200+', label: 'Enterprise Clients' },
-                { number: '99.9%', label: 'Uptime Guarantee' },
-                { number: '12+', label: 'Years in IT' },
-              ].map((stat, index) => (
-                <div key={index}>
-                  <div className="text-3xl md:text-4xl font-bold gradient-text mb-1">
-                    {stat.number}
-                  </div>
-                  <div className="text-sm text-secondary-600">{stat.label}</div>
-                </div>
-              ))}
-            </motion.div>
           </motion.div>
 
           {/* Right Content - Image */}
