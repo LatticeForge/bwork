@@ -2,20 +2,20 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navigation = [
-  { name: 'Home', href: '#home' },
-  { name: 'Services', href: '#services' },
-  { name: 'About', href: '#about' },
-  { name: 'Case Studies', href: '#case-studies' },
-  { name: 'Testimonials', href: '#testimonials' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Home', href: '/' },
+  { name: 'Services', href: '/#services' },
+  { name: 'About', href: '/#about' },
+  { name: 'Contact', href: '/#contact' },
 ]
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,10 +36,7 @@ export default function Header() {
       <nav className="container-custom">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="#home" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-accent rounded-lg flex items-center justify-center shadow-glow group-hover:shadow-glow-lg transition-all duration-300">
-              <span className="text-white font-bold text-xl">BW</span>
-            </div>
+          <Link href="/" className="group">
             <span className="text-2xl font-bold text-secondary-900 group-hover:text-accent transition-colors duration-300">BWORK</span>
           </Link>
 
@@ -56,12 +53,14 @@ export default function Header() {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
-            <Link href="#contact" className="btn-primary">
-              Get a Consultation
-            </Link>
-          </div>
+          {/* CTA Button - Only show on home page */}
+          {pathname === '/' && (
+            <div className="hidden lg:block">
+              <Link href="/#contact" className="btn-primary">
+                Get a Consultation
+              </Link>
+            </div>
+          )}
 
           {/* Mobile Menu Button */}
           <button
@@ -108,13 +107,15 @@ export default function Header() {
                     {item.name}
                   </Link>
                 ))}
-                <Link
-                  href="#contact"
-                  className="btn-primary mx-4"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Get a Consultation
-                </Link>
+                {pathname === '/' && (
+                  <Link
+                    href="/#contact"
+                    className="btn-primary mx-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Get a Consultation
+                  </Link>
+                )}
               </div>
             </motion.div>
           )}

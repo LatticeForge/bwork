@@ -1,11 +1,19 @@
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans } from 'next/font/google'
+import { Inter, Poppins } from 'next/font/google'
 import '../styles/globals.css'
+import Chatbot from '@/components/Chatbot'
 
-const plusJakarta = Plus_Jakarta_Sans({
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-plus-jakarta',
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-poppins',
   display: 'swap',
 })
 
@@ -56,11 +64,6 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
-  },
 }
 
 export default function RootLayout({
@@ -69,9 +72,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={plusJakarta.variable}>
-      <body className={plusJakarta.className}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+      <body className={inter.className}>
         {children}
+        <Chatbot />
       </body>
     </html>
   )

@@ -47,13 +47,17 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-plus-jakarta)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-poppins)', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-tech': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         'gradient-blue': 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%)',
         'gradient-cyber': 'linear-gradient(135deg, #0f172a 0%, #1e40af 100%)',
+        'gradient-navy': 'linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)',
+        'gradient-indigo': 'linear-gradient(135deg, #312e81 0%, #4338ca 50%, #6366f1 100%)',
+        'gradient-navy-indigo': 'linear-gradient(135deg, #1e3a8a 0%, #4338ca 50%, #3b82f6 100%)',
       },
       boxShadow: {
         'glow': '0 0 20px rgba(59, 130, 246, 0.5)',

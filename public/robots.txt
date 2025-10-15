@@ -1,0 +1,10 @@
+# robots.txt for https://bwork.tech
+
+User-agent: *
+Allow: /
+
+# Disallow admin and API routes
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://bwork.tech/sitemap.xml

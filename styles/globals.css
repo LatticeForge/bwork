@@ -4,7 +4,8 @@
 
 @layer base {
   :root {
-    --font-plus-jakarta: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-inter: 'Inter', system-ui, sans-serif;
+    --font-poppins: 'Poppins', system-ui, sans-serif;
   }
 
   body {
@@ -34,19 +35,19 @@
   }
 
   .heading-xl {
-    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight font-heading;
   }
 
   .heading-lg {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight;
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight font-heading;
   }
 
   .heading-md {
-    @apply text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight;
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight font-heading;
   }
 
   .heading-sm {
-    @apply text-xl md:text-2xl font-semibold;
+    @apply text-xl md:text-2xl font-semibold font-heading;
   }
 
   /* Glassmorphism effects */

@@ -1,24 +1,18 @@
-'use client'
-
-import { useState } from 'react'
 import Link from 'next/link'
 
 const footerLinks = {
   company: [
-    { name: 'About BWORK', href: '#about' },
-    { name: 'Services', href: '#services' },
-    { name: 'Case Studies', href: '#case-studies' },
-    { name: 'Careers', href: '#' },
+    { name: 'About BWORK', href: '/#about' },
+    { name: 'Services', href: '/#services' },
   ],
   services: [
-    { name: 'Cloud Infrastructure', href: '#' },
-    { name: 'Cybersecurity', href: '#' },
-    { name: 'Software Development', href: '#' },
-    { name: 'IT Consulting', href: '#' },
+    { name: 'Cloud Infrastructure', href: '/services/cloud-infrastructure' },
+    { name: 'Network Solutions', href: '/services/active-networking' },
+    { name: 'Structured Cabling', href: '/services/passive-cabling' },
+    { name: 'Data Center', href: '/services/data-center' },
   ],
   support: [
-    { name: 'Support Portal', href: '#' },
-    { name: 'Contact Us', href: '#contact' },
+    { name: 'Contact Us', href: '/contact' },
     { name: 'Privacy Policy', href: '#' },
     { name: 'Terms of Service', href: '#' },
   ],
@@ -32,86 +26,15 @@ const socialLinks = [
 ]
 
 export default function Footer() {
-  const [email, setEmail] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [message, setMessage] = useState('')
-
-  const handleNewsletterSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setMessage('')
-
-    try {
-      const response = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-
-      const data = await response.json()
-
-      if (response.ok) {
-        setMessage('Successfully subscribed!')
-        setEmail('')
-      } else {
-        setMessage(data.error || 'Something went wrong')
-      }
-    } catch (error) {
-      setMessage('Failed to subscribe. Please try again.')
-    } finally {
-      setIsSubmitting(false)
-      setTimeout(() => setMessage(''), 3000)
-    }
-  }
-
   return (
     <footer className="bg-secondary-900 text-white">
       <div className="container-custom section-padding">
-        {/* Top Section - Newsletter */}
-        <div className="border-b border-secondary-700 pb-12 mb-12">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h3 className="heading-md mb-3">Subscribe to our newsletter</h3>
-              <p className="text-secondary-300">
-                Get the latest updates, articles, and resources delivered straight to your inbox.
-              </p>
-            </div>
-            <div>
-              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  required
-                  className="flex-1 px-5 py-3 rounded-full bg-white text-secondary-900 placeholder:text-secondary-500 focus:outline-none focus:ring-2 focus:ring-accent"
-                />
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="btn-primary whitespace-nowrap disabled:opacity-50"
-                >
-                  {isSubmitting ? 'Subscribing...' : 'Subscribe'}
-                </button>
-              </form>
-              {message && (
-                <p className={`mt-2 text-sm ${message.includes('Success') ? 'text-green-400' : 'text-red-400'}`}>
-                  {message}
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-
         {/* Main Footer Content */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-4 lg:col-span-2">
-            <Link href="#home" className="flex items-center space-x-2 mb-4 group">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-accent rounded-lg flex items-center justify-center shadow-glow group-hover:shadow-glow-lg transition-all">
-                <span className="text-white font-bold text-xl">BW</span>
-              </div>
-              <span className="text-2xl font-bold">BWORK</span>
+            <Link href="/" className="mb-4 inline-block group">
+              <span className="text-2xl font-bold group-hover:text-accent transition-colors duration-300">BWORK</span>
             </Link>
             <p className="text-secondary-300 mb-6 max-w-sm">
               Empowering enterprises with cutting-edge IT integration and technology solutions for digital transformation and sustainable growth.
