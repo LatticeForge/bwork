@@ -3,7 +3,7 @@
  * Centralized configuration for backend API
  */
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://apis.bwork.sa/';
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://apis.bwork.sa';
 
 export const API_ENDPOINTS = {
   // Public endpoints
