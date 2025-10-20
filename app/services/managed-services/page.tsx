@@ -5,6 +5,24 @@ export const metadata: Metadata = {
   title: 'Managed IT Services | BWORK',
   description: '24/7 managed IT services including monitoring, maintenance, help desk, security management, and ongoing operations support.',
   keywords: ['managed IT services', 'help desk', 'IT support', 'monitoring', 'maintenance', 'MSP'],
+  alternates: {
+    canonical: 'https://bwork.tech/services/managed-services',
+  },
+  openGraph: {
+    title: 'Managed IT Services | BWORK',
+    description: '24/7 managed IT services including monitoring, maintenance, help desk, security management, and ongoing operations support.',
+    url: 'https://bwork.tech/services/managed-services',
+    siteName: 'BWORK',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'BWORK Managed IT Services',
+      },
+    ],
+    type: 'website',
+  },
 }
 
 export default function ManagedServicesPage() {

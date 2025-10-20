@@ -5,6 +5,24 @@ export const metadata: Metadata = {
   title: 'System Integration & API Development | BWORK',
   description: 'Custom API development, system integration, ETL data pipelines, and DevOps solutions connecting disparate business systems.',
   keywords: ['system integration', 'API development', 'data integration', 'ETL', 'DevOps', 'CI/CD'],
+  alternates: {
+    canonical: 'https://bwork.tech/services/integration-apis',
+  },
+  openGraph: {
+    title: 'System Integration & API Development | BWORK',
+    description: 'Custom API development, system integration, ETL data pipelines, and DevOps solutions connecting disparate business systems.',
+    url: 'https://bwork.tech/services/integration-apis',
+    siteName: 'BWORK',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'BWORK System Integration & API Development',
+      },
+    ],
+    type: 'website',
+  },
 }
 
 export default function IntegrationAPIsPage() {

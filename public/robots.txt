@@ -1,10 +1,31 @@
 # robots.txt for https://bwork.tech
 
+# Allow all search engines
 User-agent: *
 Allow: /
 
-# Disallow admin and API routes
+# Disallow private and admin areas
 Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
 
-# Sitemap
+# Crawl-delay for respectful crawling (optional)
+# Crawl-delay: 1
+
+# Specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Sitemap location
 Sitemap: https://bwork.tech/sitemap.xml
+
+# Host (preferred domain)
+Host: https://bwork.tech

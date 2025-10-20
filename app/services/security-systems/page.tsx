@@ -5,6 +5,24 @@ export const metadata: Metadata = {
   title: 'Security Systems & Surveillance Solutions | BWORK',
   description: 'Professional security system installation including CCTV, IP cameras, access control, physical security integration, and surveillance infrastructure for enterprise protection.',
   keywords: ['security systems', 'CCTV', 'IP cameras', 'access control', 'surveillance', 'physical security', 'video surveillance'],
+  alternates: {
+    canonical: 'https://bwork.tech/services/security-systems',
+  },
+  openGraph: {
+    title: 'Security Systems & Surveillance Solutions | BWORK',
+    description: 'Professional security system installation including CCTV, IP cameras, access control, and surveillance infrastructure.',
+    url: 'https://bwork.tech/services/security-systems',
+    siteName: 'BWORK',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'BWORK Security Systems & Surveillance',
+      },
+    ],
+    type: 'website',
+  },
 }
 
 export default function SecuritySystemsPage() {

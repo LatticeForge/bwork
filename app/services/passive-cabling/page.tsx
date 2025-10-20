@@ -5,6 +5,24 @@ export const metadata: Metadata = {
   title: 'Passive Cabling & Structured Cabling | BWORK',
   description: 'Professional structured cabling solutions including copper, fiber optic, patch panels, and complete cabling infrastructure for enterprise networks.',
   keywords: ['structured cabling', 'fiber optic', 'CAT6', 'CAT6a', 'CAT7', 'CAT8', 'patch panels', 'network cabling'],
+  alternates: {
+    canonical: 'https://bwork.tech/services/passive-cabling',
+  },
+  openGraph: {
+    title: 'Passive Cabling & Structured Cabling | BWORK',
+    description: 'Professional structured cabling solutions including copper, fiber optic, and complete cabling infrastructure for enterprise networks.',
+    url: 'https://bwork.tech/services/passive-cabling',
+    siteName: 'BWORK',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'BWORK Structured Cabling Solutions',
+      },
+    ],
+    type: 'website',
+  },
 }
 
 export default function PassiveCablingPage() {

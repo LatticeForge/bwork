@@ -5,6 +5,24 @@ export const metadata: Metadata = {
   title: 'Data Center Infrastructure Services | BWORK',
   description: 'Complete data center design and build services including power systems, precision cooling, raised floors, fire suppression, and monitoring.',
   keywords: ['data center', 'server room', 'data center infrastructure', 'precision cooling', 'raised floors', 'power systems'],
+  alternates: {
+    canonical: 'https://bwork.tech/services/data-center',
+  },
+  openGraph: {
+    title: 'Data Center Infrastructure Services | BWORK',
+    description: 'Complete data center design and build services including power systems, precision cooling, raised floors, and fire suppression.',
+    url: 'https://bwork.tech/services/data-center',
+    siteName: 'BWORK',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'BWORK Data Center Infrastructure',
+      },
+    ],
+    type: 'website',
+  },
 }
 
 export default function DataCenterPage() {

@@ -5,6 +5,24 @@ export const metadata: Metadata = {
   title: 'Enterprise Network & Wireless Solutions | BWORK',
   description: 'Professional enterprise networking solutions including LAN/WAN, fiber optics, wireless access, and VPN infrastructure.',
   keywords: ['enterprise networking', 'LAN', 'WAN', 'wireless networking', 'WiFi solutions', 'network infrastructure'],
+  alternates: {
+    canonical: 'https://bwork.tech/services/active-networking',
+  },
+  openGraph: {
+    title: 'Enterprise Network & Wireless Solutions | BWORK',
+    description: 'Professional enterprise networking solutions including LAN/WAN, fiber optics, wireless access, and VPN infrastructure.',
+    url: 'https://bwork.tech/services/active-networking',
+    siteName: 'BWORK',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'BWORK Enterprise Network Solutions',
+      },
+    ],
+    type: 'website',
+  },
 }
 
 export default function ActiveNetworkingPage() {

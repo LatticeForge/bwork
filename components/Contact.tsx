@@ -1,7 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { submitContact, fetchCompanyInfo, type CompanyInfo } from '@/lib/api'
+import Loading from './Loading'
+import ErrorMessage from './ErrorMessage'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -12,6 +15,9 @@ export default function Contact() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitMessage, setSubmitMessage] = useState('')
+  const [companyInfo, setCompanyInfo] = useState<CompanyInfo | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -20,32 +26,57 @@ export default function Contact() {
     })
   }
 
+  const loadCompanyInfo = async () => {
+    setLoading(true)
+    setError(null)
+
+    const response = await fetchCompanyInfo()
+
+    if (response.success && response.data) {
+      setCompanyInfo(response.data)
+    } else {
+      setError(response.error || 'Failed to load company information')
+    }
+
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    loadCompanyInfo()
+  }, [])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitMessage('')
 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      })
+    const response = await submitContact(formData)
 
-      const data = await response.json()
-
-      if (response.ok) {
-        setSubmitMessage('Thank you! We\'ll get back to you soon.')
-        setFormData({ name: '', email: '', subject: '', message: '' })
-      } else {
-        setSubmitMessage(data.error || 'Something went wrong. Please try again.')
-      }
-    } catch (error) {
-      setSubmitMessage('Failed to send message. Please try again.')
-    } finally {
-      setIsSubmitting(false)
-      setTimeout(() => setSubmitMessage(''), 5000)
+    if (response.success) {
+      setSubmitMessage(response.message || 'Thank you! We\'ll get back to you soon.')
+      setFormData({ name: '', email: '', subject: '', message: '' })
+    } else {
+      setSubmitMessage(response.error || 'Something went wrong. Please try again.')
     }
+
+    setIsSubmitting(false)
+    setTimeout(() => setSubmitMessage(''), 5000)
+  }
+
+  if (loading) {
+    return (
+      <section id="contact" className="section-padding bg-gradient-to-br from-primary-50 to-white">
+        <Loading message="Loading contact information..." />
+      </section>
+    )
+  }
+
+  if (error || !companyInfo) {
+    return (
+      <section id="contact" className="section-padding bg-gradient-to-br from-primary-50 to-white">
+        <ErrorMessage message={error || 'Failed to load contact information'} onRetry={loadCompanyInfo} />
+      </section>
+    )
   }
 
   return (
@@ -79,7 +110,7 @@ export default function Contact() {
                     </svg>
                   ),
                   title: 'Email',
-                  content: 'contact@bwork.tech',
+                  content: companyInfo.contact.email,
                 },
                 {
                   icon: (
@@ -88,7 +119,7 @@ export default function Contact() {
                     </svg>
                   ),
                   title: 'Phone',
-                  content: '+1 (800) IT-BWORK',
+                  content: companyInfo.contact.phoneFormatted,
                 },
                 {
                   icon: (
@@ -98,7 +129,7 @@ export default function Contact() {
                     </svg>
                   ),
                   title: 'Office',
-                  content: '100 Tech Center, Silicon Valley, CA 94025',
+                  content: companyInfo.office.fullAddress,
                 },
               ].map((item, index) => (
                 <motion.div

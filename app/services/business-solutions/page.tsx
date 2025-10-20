@@ -5,6 +5,24 @@ export const metadata: Metadata = {
   title: 'Business Solutions & IT Support Services | BWORK',
   description: 'Professional business solutions including POS systems, time & attendance, help desk services, and technical support to streamline operations and boost productivity.',
   keywords: ['POS systems', 'point of sale', 'time attendance', 'help desk', 'IT support', 'technical support', 'business solutions'],
+  alternates: {
+    canonical: 'https://bwork.tech/services/business-solutions',
+  },
+  openGraph: {
+    title: 'Business Solutions & IT Support Services | BWORK',
+    description: 'Professional business solutions including POS systems, time & attendance, help desk services, and technical support.',
+    url: 'https://bwork.tech/services/business-solutions',
+    siteName: 'BWORK',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'BWORK Business Solutions',
+      },
+    ],
+    type: 'website',
+  },
 }
 
 export default function BusinessSolutionsPage() {

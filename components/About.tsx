@@ -1,9 +1,52 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { fetchCompanyInfo, type CompanyInfo } from '@/lib/api'
+import Loading from './Loading'
+import ErrorMessage from './ErrorMessage'
 
 export default function About() {
+  const [companyInfo, setCompanyInfo] = useState<CompanyInfo | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  const loadCompanyInfo = async () => {
+    setLoading(true)
+    setError(null)
+
+    const response = await fetchCompanyInfo()
+
+    if (response.success && response.data) {
+      setCompanyInfo(response.data)
+    } else {
+      setError(response.error || 'Failed to load company information')
+    }
+
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    loadCompanyInfo()
+  }, [])
+
+  if (loading) {
+    return (
+      <section id="about" className="section-padding bg-white">
+        <Loading message="Loading company information..." />
+      </section>
+    )
+  }
+
+  if (error || !companyInfo) {
+    return (
+      <section id="about" className="section-padding bg-white">
+        <ErrorMessage message={error || 'Failed to load company information'} onRetry={loadCompanyInfo} />
+      </section>
+    )
+  }
+
   return (
     <section id="about" className="section-padding bg-white">
       <div className="container-custom">
@@ -19,7 +62,7 @@ export default function About() {
             <div className="relative rounded-2xl overflow-hidden shadow-tech">
               <Image
                 src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=700&h=500&fit=crop"
-                alt="BWORK IT team collaboration"
+                alt={`${companyInfo.name} IT team collaboration`}
                 width={700}
                 height={500}
                 className="w-full h-auto object-cover"
@@ -35,10 +78,10 @@ export default function About() {
             transition={{ duration: 0.8 }}
           >
             <span className="px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-semibold mb-6 inline-block border border-accent/20">
-              About BWORK
+              About {companyInfo.name}
             </span>
             <h2 className="heading-lg mb-6">
-              Your Trusted Partner in IT Integration & Digital Transformation
+              {companyInfo.tagline}
             </h2>
             <p className="text-lg text-secondary-600 mb-6 leading-relaxed">
               BWORK is a leading IT Integration and Technology Solutions provider specializing in enterprise-grade infrastructure, security, and software development. We empower businesses to achieve their digital transformation goals through innovative technology solutions.

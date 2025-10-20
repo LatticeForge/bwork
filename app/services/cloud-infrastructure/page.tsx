@@ -5,6 +5,24 @@ export const metadata: Metadata = {
   title: 'Cloud & Infrastructure Solutions | BWORK',
   description: 'Enterprise cloud infrastructure, data center design, server virtualization, and storage solutions. Scalable, secure infrastructure for modern businesses.',
   keywords: ['cloud infrastructure', 'data center', 'server virtualization', 'enterprise storage', 'backup solutions', 'disaster recovery'],
+  alternates: {
+    canonical: 'https://bwork.tech/services/cloud-infrastructure',
+  },
+  openGraph: {
+    title: 'Cloud & Infrastructure Solutions | BWORK',
+    description: 'Enterprise cloud infrastructure, data center design, server virtualization, and storage solutions.',
+    url: 'https://bwork.tech/services/cloud-infrastructure',
+    siteName: 'BWORK',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'BWORK Cloud & Infrastructure Solutions',
+      },
+    ],
+    type: 'website',
+  },
 }
 
 export default function CloudInfrastructurePage() {

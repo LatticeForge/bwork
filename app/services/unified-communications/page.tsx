@@ -5,6 +5,24 @@ export const metadata: Metadata = {
   title: 'Unified Communications & AV Solutions | BWORK',
   description: 'Enterprise unified communications including IP telephony, VoIP, videoconferencing, telepresence, and intelligent video surveillance systems.',
   keywords: ['unified communications', 'IP telephony', 'VoIP', 'videoconferencing', 'telepresence', 'video surveillance'],
+  alternates: {
+    canonical: 'https://bwork.tech/services/unified-communications',
+  },
+  openGraph: {
+    title: 'Unified Communications & AV Solutions | BWORK',
+    description: 'Enterprise unified communications including IP telephony, VoIP, videoconferencing, telepresence, and intelligent video surveillance.',
+    url: 'https://bwork.tech/services/unified-communications',
+    siteName: 'BWORK',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'BWORK Unified Communications Solutions',
+      },
+    ],
+    type: 'website',
+  },
 }
 
 export default function UnifiedCommunicationsPage() {

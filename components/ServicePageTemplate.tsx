@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Header from './Header'
 import Footer from './Footer'
+import Breadcrumbs from './Breadcrumbs'
 
 interface Feature {
   title: string
@@ -33,8 +34,42 @@ export default function ServicePageTemplate({
   benefits,
   cta = { text: 'Request Consultation', href: '/contact' }
 }: ServicePageTemplateProps) {
+  // JSON-LD Service schema
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: title,
+    description: description,
+    provider: {
+      '@type': 'Organization',
+      name: 'BWORK Technologies',
+      url: 'https://bwork.tech',
+    },
+    serviceType: title,
+    areaServed: {
+      '@type': 'Country',
+      name: 'United States',
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: `${title} Features`,
+      itemListElement: features.map((feature, index) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: feature.title,
+          description: feature.description,
+        },
+      })),
+    },
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
       <Header />
       <main>
         {/* Hero Section */}
@@ -48,15 +83,14 @@ export default function ServicePageTemplate({
               transition={{ duration: 0.6 }}
               className="max-w-4xl"
             >
-              <Link
-                href="/#services"
-                className="inline-flex items-center text-accent-light hover:text-accent mb-6 transition-colors"
-              >
-                <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                Back to Services
-              </Link>
+              <div className="text-secondary-200">
+                <Breadcrumbs
+                  items={[
+                    { label: 'Services', href: '/#services' },
+                    { label: title, href: `#` },
+                  ]}
+                />
+              </div>
 
               <h1 className="heading-xl mb-4">{title}</h1>
               <p className="text-xl text-secondary-200 mb-8">{subtitle}</p>

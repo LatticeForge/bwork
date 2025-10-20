@@ -1,0 +1,23 @@
+version: 1
+applications:
+  - appRoot: .
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - nvm install 20
+            - node -v
+            - npm ci || npm install
+        build:
+          commands:
+            - npm run build
+        postBuild:
+          commands:
+            - 'echo "Build completed: $(date)"'
+      artifacts:
+        baseDirectory: .next
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*

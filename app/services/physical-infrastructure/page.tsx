@@ -5,6 +5,24 @@ export const metadata: Metadata = {
   title: 'Physical Infrastructure Services | BWORK',
   description: 'Comprehensive physical infrastructure solutions including power distribution, environmental control, raised floors, cable management, and equipment installation for enterprise IT environments.',
   keywords: ['physical infrastructure', 'power distribution', 'environmental control', 'raised floors', 'cable management', 'equipment racks', 'IT infrastructure'],
+  alternates: {
+    canonical: 'https://bwork.tech/services/physical-infrastructure',
+  },
+  openGraph: {
+    title: 'Physical Infrastructure Services | BWORK',
+    description: 'Comprehensive physical infrastructure solutions including power distribution, environmental control, raised floors, and cable management.',
+    url: 'https://bwork.tech/services/physical-infrastructure',
+    siteName: 'BWORK',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'BWORK Physical Infrastructure Services',
+      },
+    ],
+    type: 'website',
+  },
 }
 
 export default function PhysicalInfrastructurePage() {
