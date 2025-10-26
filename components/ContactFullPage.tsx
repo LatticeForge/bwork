@@ -14,18 +14,29 @@ export default function ContactFullPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitMessage, setSubmitMessage] = useState('')
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     })
+    // Clear field error when user starts typing
+    if (fieldErrors[name]) {
+      setFieldErrors(prev => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitMessage('')
+    setFieldErrors({})
 
     try {
       const response = await fetch('/api/contact', {
@@ -40,7 +51,17 @@ export default function ContactFullPage() {
         setSubmitMessage('Thank you! We will get back to you soon.')
         setFormData({ name: '', email: '', subject: '', message: '' })
       } else {
-        setSubmitMessage(data.error || 'Something went wrong. Please try again.')
+        // Check if there are field-specific validation errors
+        if (data.details && data.details.length > 0) {
+          const errors: Record<string, string> = {}
+          data.details.forEach((detail: { field: string; message: string }) => {
+            errors[detail.field] = detail.message
+          })
+          setFieldErrors(errors)
+          // Don't set a general message, only show field-specific errors
+        } else {
+          setSubmitMessage(data.error || 'Something went wrong. Please try again.')
+        }
       }
     } catch (error) {
       setSubmitMessage('Failed to send message. Please try again.')
@@ -221,9 +242,16 @@ export default function ContactFullPage() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all bg-white"
+                      className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-white ${
+                        fieldErrors.name
+                          ? 'border-red-500 focus:ring-red-500'
+                          : 'border-secondary-300 focus:ring-accent'
+                      }`}
                       placeholder="John Doe"
                     />
+                    {fieldErrors.name && (
+                      <p className="mt-1 text-sm text-red-600">{fieldErrors.name}</p>
+                    )}
                   </div>
 
                   {/* Email */}
@@ -238,9 +266,16 @@ export default function ContactFullPage() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all bg-white"
+                      className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-white ${
+                        fieldErrors.email
+                          ? 'border-red-500 focus:ring-red-500'
+                          : 'border-secondary-300 focus:ring-accent'
+                      }`}
                       placeholder="john@example.com"
                     />
+                    {fieldErrors.email && (
+                      <p className="mt-1 text-sm text-red-600">{fieldErrors.email}</p>
+                    )}
                   </div>
 
                   {/* Subject */}
@@ -255,9 +290,16 @@ export default function ContactFullPage() {
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all bg-white"
+                      className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-white ${
+                        fieldErrors.subject
+                          ? 'border-red-500 focus:ring-red-500'
+                          : 'border-secondary-300 focus:ring-accent'
+                      }`}
                       placeholder="How can we help?"
                     />
+                    {fieldErrors.subject && (
+                      <p className="mt-1 text-sm text-red-600">{fieldErrors.subject}</p>
+                    )}
                   </div>
 
                   {/* Message */}
@@ -272,9 +314,16 @@ export default function ContactFullPage() {
                       onChange={handleChange}
                       required
                       rows={5}
-                      className="w-full px-4 py-3 rounded-lg border border-secondary-300 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-none bg-white"
+                      className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition-all resize-none bg-white ${
+                        fieldErrors.message
+                          ? 'border-red-500 focus:ring-red-500'
+                          : 'border-secondary-300 focus:ring-accent'
+                      }`}
                       placeholder="Tell us about your IT infrastructure needs..."
                     />
+                    {fieldErrors.message && (
+                      <p className="mt-1 text-sm text-red-600">{fieldErrors.message}</p>
+                    )}
                   </div>
 
                   {/* Submit Button */}
@@ -292,7 +341,7 @@ export default function ContactFullPage() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className={`text-center font-medium ${
-                        submitMessage.includes('Thank you') ? 'text-green-600' : 'text-red-600'
+                        submitMessage.includes('Thank you') || submitMessage.toLowerCase().includes('success') ? 'text-green-600' : 'text-red-600'
                       }`}
                     >
                       {submitMessage}

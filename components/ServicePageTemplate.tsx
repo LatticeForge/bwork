@@ -73,7 +73,7 @@ export default function ServicePageTemplate({
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-navy-indigo text-white relative overflow-hidden">
+        <section className="pt-32 pb-12 bg-gradient-navy-indigo text-white relative overflow-hidden">
           <div className="absolute inset-0 tech-grid opacity-20" />
 
           <div className="container-custom relative z-10">
@@ -83,7 +83,7 @@ export default function ServicePageTemplate({
               transition={{ duration: 0.6 }}
               className="max-w-4xl"
             >
-              <div className="text-secondary-200">
+              <div className="text-white/70">
                 <Breadcrumbs
                   items={[
                     { label: 'Services', href: '/#services' },
@@ -92,9 +92,8 @@ export default function ServicePageTemplate({
                 />
               </div>
 
-              <h1 className="heading-xl mb-4">{title}</h1>
-              <p className="text-xl text-secondary-200 mb-8">{subtitle}</p>
-              <p className="text-lg text-secondary-300 leading-relaxed">{description}</p>
+              <h1 className="heading-xl mb-12 text-white">{title}</h1>
+              <p className="text-xl text-white/90">{subtitle}</p>
             </motion.div>
           </div>
         </section>

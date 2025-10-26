@@ -46,7 +46,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
               <li key={item.href} className="flex items-center">
                 {index > 0 && (
                   <svg
-                    className="w-4 h-4 mx-2 text-secondary-400"
+                    className="w-4 h-4 mx-2 text-white/50"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -61,13 +61,13 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                 )}
 
                 {isLast ? (
-                  <span className="text-secondary-700 font-medium" aria-current="page">
+                  <span className="text-white font-medium" aria-current="page">
                     {item.label}
                   </span>
                 ) : (
                   <Link
                     href={item.href}
-                    className="text-secondary-600 hover:text-accent transition-colors"
+                    className="text-white/80 hover:text-white transition-colors"
                   >
                     {item.label}
                   </Link>

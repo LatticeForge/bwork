@@ -37,7 +37,9 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="group">
-            <span className="text-2xl font-bold text-secondary-900 group-hover:text-accent transition-colors duration-300">BWORK</span>
+            <span className={`text-2xl font-bold group-hover:text-accent transition-colors duration-300 ${
+              (pathname === '/' || isScrolled) ? 'text-secondary-900' : 'text-white'
+            }`}>BWORK</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -46,7 +48,9 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-secondary-700 hover:text-accent font-medium transition-colors duration-200"
+                className={`hover:text-accent font-medium transition-colors duration-200 ${
+                  (pathname === '/' || isScrolled) ? 'text-secondary-700' : 'text-white'
+                }`}
               >
                 {item.name}
               </Link>
@@ -69,7 +73,9 @@ export default function Header() {
             aria-label="Toggle menu"
           >
             <svg
-              className="w-6 h-6 text-secondary-900"
+              className={`w-6 h-6 ${
+                (pathname === '/' || isScrolled) ? 'text-secondary-900' : 'text-white'
+              }`}
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -94,7 +100,7 @@ export default function Header() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden mt-4 pb-4"
+              className="lg:hidden mt-4 pb-4 bg-white rounded-lg shadow-lg"
             >
               <div className="flex flex-col space-y-4">
                 {navigation.map((item) => (

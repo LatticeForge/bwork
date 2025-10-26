@@ -6,11 +6,17 @@
 import { API_URL, API_ENDPOINTS } from './apiConfig';
 
 // Types
+export interface ValidationError {
+  field: string;
+  message: string;
+}
+
 export interface APIResponse<T = any> {
   success: boolean;
   message?: string;
   data?: T;
   error?: string;
+  details?: ValidationError[];
 }
 
 export interface Service {
@@ -92,7 +98,12 @@ async function fetchAPI<T>(
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.error || `API Error: ${response.status}`);
+      // Return the full error response including validation details
+      return {
+        success: false,
+        error: data.error || `API Error: ${response.status}`,
+        details: data.details, // Preserve validation error details
+      };
     }
 
     return data;
