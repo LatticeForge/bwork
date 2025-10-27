@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 
 export default function Hero() {
   return (
-    <section id="home" className="pt-32 pb-16 md:pt-40 md:pb-24 bg-gradient-to-br from-primary-50 via-white to-secondary-50 overflow-hidden relative">
+    <section id="home" className="pt-32 pb-16 md:pt-40 md:pb-24 bg-gradient-to-br from-primary-50 via-white to-secondary-50 overflow-hidden relative max-w-full">
       {/* Tech Grid Background */}
       <div className="absolute inset-0 tech-grid opacity-40" />
 
@@ -52,12 +52,12 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto"
             >
-              <Link href="#contact" className="btn-primary group">
+              <Link href="#contact" className="btn-primary group w-full sm:w-auto justify-center">
                 Get a Consultation
                 <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                  className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -65,10 +65,10 @@ export default function Hero() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
-              <Link href="#services" className="btn-secondary group">
+              <Link href="#services" className="btn-secondary group w-full sm:w-auto justify-center">
                 Explore Services
                 <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                  className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -84,9 +84,9 @@ export default function Hero() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
+            className="relative max-w-full"
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-tech">
+            <div className="relative rounded-2xl overflow-hidden shadow-tech max-w-full">
               <Image
                 src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop"
                 alt="Modern IT infrastructure and technology"
@@ -101,17 +101,17 @@ export default function Hero() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.8, duration: 0.5 }}
-                className="absolute bottom-8 left-8 glass-card p-6 max-w-[250px]"
+                className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 md:bottom-8 md:left-8 glass-card p-4 sm:p-5 md:p-6 max-w-[200px] sm:max-w-[220px] md:max-w-[250px]"
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-glow">
-                    <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-glow">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-secondary-900">24/7</div>
-                    <div className="text-sm text-secondary-600">IT Support</div>
+                    <div className="text-xl sm:text-2xl font-bold text-secondary-900">24/7</div>
+                    <div className="text-xs sm:text-sm text-secondary-600">IT Support</div>
                   </div>
                 </div>
               </motion.div>
@@ -127,7 +127,8 @@ export default function Hero() {
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="absolute -top-6 -right-6 w-32 h-32 bg-accent/30 rounded-full blur-3xl"
+              className="absolute -top-6 -right-6 w-24 h-24 sm:w-32 sm:h-32 bg-accent/30 rounded-full blur-3xl pointer-events-none"
+              style={{ maxWidth: '100%' }}
             />
             <motion.div
               animate={{
@@ -138,7 +139,8 @@ export default function Hero() {
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="absolute -bottom-6 -left-6 w-40 h-40 bg-primary-300/40 rounded-full blur-3xl"
+              className="absolute -bottom-6 -left-6 w-32 h-32 sm:w-40 sm:h-40 bg-primary-300/40 rounded-full blur-3xl pointer-events-none"
+              style={{ maxWidth: '100%' }}
             />
           </motion.div>
         </div>

@@ -101,7 +101,7 @@ export default function Benefits() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {benefits.map((benefit, index) => {
             const icon = iconMap[benefit.category] || iconMap['Reliability & Performance']
 
@@ -116,32 +116,32 @@ export default function Benefits() {
                 className="group"
               >
                 {/* Simple Professional Block */}
-                <div className={`bg-gradient-to-br ${benefitGradients[index % benefitGradients.length]} border-2 border-accent/10 rounded-3xl p-8 lg:p-10 h-full flex flex-col relative overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl hover:border-accent/20`}>
+                <div className={`bg-gradient-to-br ${benefitGradients[index % benefitGradients.length]} border-2 border-accent/10 rounded-3xl p-6 sm:p-7 md:p-8 lg:p-10 h-full flex flex-col relative overflow-hidden transition-all duration-300 shadow-md hover:shadow-xl hover:border-accent/20`}>
                   {/* Subtle hover overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                   {/* Content */}
                   <div className="relative z-10">
                     {/* Icon */}
-                    <div className="mb-6">
-                      <div className="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/20 to-primary-100 rounded-2xl flex items-center justify-center text-accent group-hover:scale-110 transition-all duration-300 shadow-sm">
+                    <div className="mb-5 sm:mb-6">
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-accent/20 to-primary-100 rounded-2xl flex items-center justify-center text-accent group-hover:scale-110 transition-all duration-300 shadow-sm">
                         {icon}
                       </div>
                     </div>
 
                     {/* Category Title */}
-                    <h3 className="text-2xl lg:text-3xl font-bold text-secondary-900 mb-6 leading-tight group-hover:text-accent transition-colors duration-300">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-secondary-900 mb-5 sm:mb-6 leading-tight group-hover:text-accent transition-colors duration-300">
                       {benefit.category}
                     </h3>
 
                     {/* Features List */}
-                    <ul className="space-y-3 flex-grow">
+                    <ul className="space-y-2.5 sm:space-y-3 flex-grow">
                       {benefit.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-secondary-700">
-                          <svg className="w-5 h-5 text-accent flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <li key={idx} className="flex items-start gap-2.5 sm:gap-3 text-secondary-700">
+                          <svg className="w-5 h-5 text-accent flex-shrink-0 mt-0.5 sm:mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                           </svg>
-                          <span className="text-base leading-relaxed">{feature}</span>
+                          <span className="text-sm sm:text-base leading-relaxed">{feature}</span>
                         </li>
                       ))}
                     </ul>

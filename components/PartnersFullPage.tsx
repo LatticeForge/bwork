@@ -72,7 +72,7 @@ export default function PartnersFullPage() {
             </motion.div>
 
             {/* All Partners Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 mb-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8 mb-16">
               {partners.map((partner, index) => (
                 <motion.div
                   key={partner.name}
@@ -80,9 +80,9 @@ export default function PartnersFullPage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.05, duration: 0.4 }}
-                  className="tech-card flex flex-col items-center justify-center p-6 group hover:scale-105 transition-transform"
+                  className="tech-card flex flex-col items-center justify-center p-4 sm:p-5 md:p-6 group hover:scale-105 transition-transform"
                 >
-                  <div className="w-32 h-20 relative mb-3 grayscale group-hover:grayscale-0 transition-all duration-300">
+                  <div className="w-28 h-16 sm:w-32 sm:h-20 relative mb-3 grayscale group-hover:grayscale-0 transition-all duration-300">
                     <Image
                       src={partner.logo}
                       alt={`${partner.name} logo`}
@@ -90,8 +90,8 @@ export default function PartnersFullPage() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="font-semibold text-secondary-900 mb-1">{partner.name}</h3>
-                  <p className="text-sm text-secondary-600 text-center">{partner.category}</p>
+                  <h3 className="font-semibold text-secondary-900 mb-1 text-sm sm:text-base">{partner.name}</h3>
+                  <p className="text-xs sm:text-sm text-secondary-600 text-center">{partner.category}</p>
                 </motion.div>
               ))}
             </div>

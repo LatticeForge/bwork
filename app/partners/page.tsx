@@ -18,5 +18,9 @@ export const metadata: Metadata = {
 }
 
 export default function PartnersPage() {
-  return <PartnersFullPage />
+  return (
+    <div className="overflow-x-hidden max-w-full">
+      <PartnersFullPage />
+    </div>
+  )
 }

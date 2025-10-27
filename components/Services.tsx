@@ -91,7 +91,7 @@ export default function Services() {
   }
 
   return (
-    <section id="services" className="section-padding bg-gradient-to-b from-secondary-50 to-white relative overflow-hidden">
+    <section id="services" className="section-padding bg-gradient-to-b from-secondary-50 to-white relative overflow-hidden max-w-full">
       {/* Decorative background */}
       <div className="absolute inset-0 tech-grid opacity-20" />
 

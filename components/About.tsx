@@ -48,18 +48,18 @@ export default function About() {
   }
 
   return (
-    <section id="about" className="section-padding bg-white">
+    <section id="about" className="section-padding bg-white overflow-hidden">
       <div className="container-custom">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
           {/* Left - Image */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative"
+            className="relative max-w-full"
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-tech">
+            <div className="relative rounded-2xl overflow-hidden shadow-tech max-w-full">
               <Image
                 src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=700&h=500&fit=crop"
                 alt={`${companyInfo.name} IT team collaboration`}

@@ -97,7 +97,7 @@ export default function ContactFullPage() {
         {/* Contact Form & Info Section */}
         <section className="section-padding bg-white">
           <div className="container-custom">
-            <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 max-w-6xl mx-auto">
               {/* Left - Contact Info */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
@@ -225,11 +225,11 @@ export default function ContactFullPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="bg-secondary-50 rounded-2xl p-8 shadow-xl"
+                className="bg-secondary-50 rounded-2xl p-6 sm:p-7 md:p-8 shadow-xl"
               >
                 <h3 className="heading-md mb-6">Request a Consultation</h3>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
                   {/* Name */}
                   <div>
                     <label htmlFor="name" className="block text-sm font-semibold text-secondary-900 mb-2">
@@ -242,7 +242,7 @@ export default function ContactFullPage() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-white ${
+                      className={`w-full px-4 py-3 sm:py-3.5 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-white text-base ${
                         fieldErrors.name
                           ? 'border-red-500 focus:ring-red-500'
                           : 'border-secondary-300 focus:ring-accent'
@@ -266,7 +266,7 @@ export default function ContactFullPage() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-white ${
+                      className={`w-full px-4 py-3 sm:py-3.5 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-white text-base ${
                         fieldErrors.email
                           ? 'border-red-500 focus:ring-red-500'
                           : 'border-secondary-300 focus:ring-accent'
@@ -290,7 +290,7 @@ export default function ContactFullPage() {
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-white ${
+                      className={`w-full px-4 py-3 sm:py-3.5 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition-all bg-white text-base ${
                         fieldErrors.subject
                           ? 'border-red-500 focus:ring-red-500'
                           : 'border-secondary-300 focus:ring-accent'
@@ -314,7 +314,7 @@ export default function ContactFullPage() {
                       onChange={handleChange}
                       required
                       rows={5}
-                      className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition-all resize-none bg-white ${
+                      className={`w-full px-4 py-3 sm:py-3.5 rounded-lg border focus:outline-none focus:ring-2 focus:border-transparent transition-all resize-none bg-white text-base ${
                         fieldErrors.message
                           ? 'border-red-500 focus:ring-red-500'
                           : 'border-secondary-300 focus:ring-accent'
@@ -330,7 +330,7 @@ export default function ContactFullPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed min-h-[48px]"
                   >
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                   </button>

@@ -114,24 +114,24 @@ export default function Process() {
                   className="relative group"
                 >
                   {/* Professional Card */}
-                  <div className="bg-white rounded-2xl border border-secondary-200 shadow-lg hover:shadow-2xl transition-all duration-300 p-6 md:p-8 lg:p-10 h-full flex flex-col relative overflow-hidden min-h-[280px] sm:min-h-[320px]">
+                  <div className="bg-white rounded-2xl border border-secondary-200 shadow-lg hover:shadow-2xl transition-all duration-300 p-6 sm:p-7 md:p-8 lg:p-10 h-full flex flex-col relative overflow-hidden min-h-[260px] sm:min-h-[280px] md:min-h-[320px]">
                     {/* Gradient Background Accent */}
                     <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-accent to-primary-400" />
 
                     {/* Number Badge - Top Left */}
-                    <div className="mb-6">
-                      <div className="w-14 h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-gradient-to-br from-accent/10 to-primary-100 rounded-xl flex items-center justify-center shadow-md inline-flex">
-                        <span className="text-2xl md:text-3xl font-bold gradient-text">{step.number}</span>
+                    <div className="mb-4 sm:mb-5 md:mb-6">
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 bg-gradient-to-br from-accent/10 to-primary-100 rounded-xl flex items-center justify-center shadow-md inline-flex">
+                        <span className="text-xl sm:text-2xl md:text-3xl font-bold gradient-text">{step.number}</span>
                       </div>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-secondary-900 mb-4 md:mb-5 leading-tight group-hover:text-accent transition-colors duration-300">
+                    <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-secondary-900 mb-3 sm:mb-4 md:mb-5 leading-tight group-hover:text-accent transition-colors duration-300">
                       {step.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-secondary-600 leading-relaxed text-sm md:text-base flex-grow">
+                    <p className="text-secondary-600 leading-relaxed text-sm sm:text-base flex-grow">
                       {step.description}
                     </p>
                   </div>

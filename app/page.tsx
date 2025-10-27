@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main>
+      <main className="overflow-x-hidden max-w-full">
         <Hero />
         <Partners />
         <Services />

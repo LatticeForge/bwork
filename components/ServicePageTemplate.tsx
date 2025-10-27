@@ -71,7 +71,7 @@ export default function ServicePageTemplate({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
       <Header />
-      <main>
+      <main className="overflow-x-hidden max-w-full">
         {/* Hero Section */}
         <section className="pt-32 pb-12 bg-gradient-navy-indigo text-white relative overflow-hidden">
           <div className="absolute inset-0 tech-grid opacity-20" />
@@ -92,8 +92,8 @@ export default function ServicePageTemplate({
                 />
               </div>
 
-              <h1 className="heading-xl mb-12 text-white">{title}</h1>
-              <p className="text-xl text-white/90">{subtitle}</p>
+              <h1 className="heading-xl mb-6 sm:mb-8 md:mb-12 text-white">{title}</h1>
+              <p className="text-lg sm:text-xl text-white/90">{subtitle}</p>
             </motion.div>
           </div>
         </section>
@@ -133,8 +133,8 @@ export default function ServicePageTemplate({
               <h2 className="heading-lg text-center mb-12">Technical Specifications</h2>
 
               <div className="max-w-4xl mx-auto">
-                <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg">
-                  <ul className="grid md:grid-cols-2 gap-4">
+                <div className="bg-white rounded-2xl p-6 sm:p-8 md:p-12 shadow-lg">
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {technicalSpecs.map((spec, index) => (
                       <motion.li
                         key={index}

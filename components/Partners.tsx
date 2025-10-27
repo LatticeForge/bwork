@@ -62,9 +62,9 @@ export default function Partners() {
             {duplicatedPartners.map((partner, index) => (
               <div
                 key={`${partner.name}-${index}`}
-                className="flex-shrink-0 w-40 mx-6"
+                className="flex-shrink-0 w-32 sm:w-36 md:w-40 mx-4 sm:mx-5 md:mx-6"
               >
-                <div className="relative w-32 h-16 mx-auto transition-all duration-300 hover:scale-110">
+                <div className="relative w-24 h-12 sm:w-28 sm:h-14 md:w-32 md:h-16 mx-auto transition-all duration-300 hover:scale-110">
                   <Image
                     src={partner.logo}
                     alt={`${partner.name} logo`}
@@ -77,8 +77,8 @@ export default function Partners() {
           </div>
 
           {/* Gradient overlays for smooth edge fade effect */}
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
+          <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-16 md:w-20 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
+          <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-16 md:w-20 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
         </div>
       </div>
 

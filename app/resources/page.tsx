@@ -18,5 +18,9 @@ export const metadata: Metadata = {
 }
 
 export default function ResourcesPage() {
-  return <ResourcesFullPage />
+  return (
+    <div className="overflow-x-hidden max-w-full">
+      <ResourcesFullPage />
+    </div>
+  )
 }

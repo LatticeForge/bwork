@@ -18,5 +18,9 @@ export const metadata: Metadata = {
 }
 
 export default function ContactPage() {
-  return <ContactFullPage />
+  return (
+    <div className="overflow-x-hidden max-w-full">
+      <ContactFullPage />
+    </div>
+  )
 }

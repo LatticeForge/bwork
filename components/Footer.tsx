@@ -45,9 +45,9 @@ export default function Footer() {
     <footer className="bg-secondary-900 text-white">
       <div className="container-custom section-padding">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
           {/* Brand */}
-          <div className="col-span-2 md:col-span-4 lg:col-span-2">
+          <div className="col-span-1 sm:col-span-2 md:col-span-4 lg:col-span-2">
             <Link href="/" className="mb-4 inline-block group">
               <span className="text-2xl font-bold group-hover:text-accent transition-colors duration-300">
                 {companyInfo?.name || 'BWORK'}
@@ -133,11 +133,11 @@ export default function Footer() {
 
         {/* Bottom Section - Copyright */}
         <div className="border-t border-secondary-700 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
             <p className="text-secondary-400 text-sm">
               &copy; {new Date().getFullYear()} {companyInfo?.name || 'BWORK'} Technologies. All rights reserved.
             </p>
-            <div className="flex gap-6">
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
               <Link href="#" className="text-secondary-400 hover:text-accent text-sm transition-colors">
                 Privacy Policy
               </Link>
