@@ -182,7 +182,7 @@ export const partners: Partner[] = [
 export const quickReplies: QuickReply[] = [
   { label: 'Our Services', value: 'services' },
   { label: 'Technology Partners', value: 'partners' },
-  { label: 'Request a Quote', value: 'quote' },
+  { label: 'Contact Us', value: 'quote' },
   { label: 'Download Brochure', value: 'brochure' },
 ]
 
@@ -205,8 +205,8 @@ Our partnerships ensure you receive proven, enterprise-grade products backed by 
     quickReplies: true,
   },
   quote: {
-    message: "I'd be happy to help you request a consultation! Please provide the following information and our team will get back to you shortly.",
-    showForm: true,
+    message: "I'd be happy to help you request a consultation! You can reach us through:\n\n📧 Email: info@bwork.sa\n📞 Phone: +966 11 123 4567\n🌐 Visit our Contact page for more options\n\nOur team will get back to you within 24 hours. What else can I help you with?",
+    quickReplies: true,
   },
   brochure: {
     message: "You can download our comprehensive service brochures:",

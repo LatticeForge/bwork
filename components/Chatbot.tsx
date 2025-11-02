@@ -39,24 +39,10 @@ export default function Chatbot() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
 
-  // Load chat history from localStorage
+  // Initialize with greeting message
   useEffect(() => {
-    const savedMessages = localStorage.getItem('bwork-chat-history')
-    if (savedMessages) {
-      const parsed = JSON.parse(savedMessages)
-      setMessages(parsed.map((m: any) => ({ ...m, timestamp: new Date(m.timestamp) })))
-    } else {
-      // Send initial greeting
-      addBotMessage(responses.greeting.message, responses.greeting.quickReplies)
-    }
+    addBotMessage(responses.greeting.message, responses.greeting.quickReplies)
   }, [])
-
-  // Save chat history to localStorage
-  useEffect(() => {
-    if (messages.length > 0) {
-      localStorage.setItem('bwork-chat-history', JSON.stringify(messages))
-    }
-  }, [messages])
 
   // Auto-scroll to bottom
   useEffect(() => {
@@ -87,7 +73,34 @@ export default function Chatbot() {
       timestamp: new Date(),
     }
     setMessages(prev => [...prev, newMessage])
+
+    // Save individual message to backend immediately
+    saveMessageToBackend(text)
   }
+
+  // Save individual user message to backend
+  const saveMessageToBackend = async (message: string) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'}/api/chat-enquiry`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message,
+        }),
+      })
+
+      if (response.ok) {
+        console.log('✅ Message saved successfully')
+      } else {
+        console.error('Failed to save message:', await response.text())
+      }
+    } catch (error) {
+      console.error('Error saving message:', error)
+    }
+  }
+
 
   const handleSendMessage = (message?: string) => {
     const textToSend = message || inputValue.trim()
@@ -136,6 +149,8 @@ export default function Chatbot() {
     e.preventDefault()
 
     try {
+      // User messages are already auto-saved when they send each message
+
       const response = await fetch('/api/inquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -172,7 +187,6 @@ export default function Chatbot() {
 
   const handleClearChat = () => {
     setMessages([])
-    localStorage.removeItem('bwork-chat-history')
     addBotMessage(responses.greeting.message, responses.greeting.quickReplies)
     setShowInquiryForm(false)
   }
