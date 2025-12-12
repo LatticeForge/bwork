@@ -91,10 +91,10 @@ export default function Benefits() {
           className="text-center max-w-4xl mx-auto mb-20"
         >
           <span className="px-5 py-2 bg-accent/10 text-accent rounded-full text-base font-semibold mb-6 inline-block border border-accent/20">
-            Why Choose BWORK
+            Why Choose Beyond Work
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6">
-            The BWORK Advantage
+            The Beyond Work Advantage
           </h2>
           <p className="text-xl text-secondary-600 leading-relaxed">
             Enterprise IT solutions that deliver reliability, security, and innovation for your business.

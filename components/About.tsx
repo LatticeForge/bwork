@@ -84,7 +84,7 @@ export default function About() {
               {companyInfo.tagline}
             </h2>
             <p className="text-lg text-secondary-600 mb-6 leading-relaxed">
-              BWORK is a leading IT Integration and Technology Solutions provider specializing in enterprise-grade infrastructure, security, and software development. We empower businesses to achieve their digital transformation goals through innovative technology solutions.
+              Beyond Work is a leading IT Integration and Technology Solutions provider specializing in enterprise-grade infrastructure, security, and software development. We empower businesses to achieve their digital transformation goals through innovative technology solutions.
             </p>
             <p className="text-secondary-600 mb-8 leading-relaxed">
               With over a decade of experience serving Fortune 500 companies and startups alike, our team of certified experts delivers scalable, secure, and future-ready solutions that drive measurable business value.
