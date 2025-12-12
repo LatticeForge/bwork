@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://bwork.tech'
+  const baseUrl = 'https://bwork.sa'
   const currentDate = new Date().toISOString()
 
   // Define all service slugs

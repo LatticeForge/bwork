@@ -19,18 +19,18 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'BWORK - IT Integration & Technology Solutions',
+  title: 'Beyond Work - IT Integration & Technology Solutions',
   description: 'Enterprise IT Integration and Technology Solutions provider. We deliver cloud infrastructure, cybersecurity, software development, API integration, and IT consulting services to transform your business.',
   keywords: ['IT integration', 'technology solutions', 'cloud infrastructure', 'cybersecurity', 'software development', 'API integration', 'IT consulting', 'DevOps', 'enterprise IT', 'digital transformation'],
-  authors: [{ name: 'BWORK Technologies' }],
-  creator: 'BWORK',
-  publisher: 'BWORK',
+  authors: [{ name: 'Beyond Work' }],
+  creator: 'Beyond Work',
+  publisher: 'Beyond Work',
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://bwork.tech'),
+  metadataBase: new URL('https://bwork.sa'),
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
@@ -44,16 +44,16 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   openGraph: {
-    title: 'BWORK - IT Integration & Technology Solutions',
+    title: 'Beyond Work - IT Integration & Technology Solutions',
     description: 'Enterprise IT Integration and Technology Solutions provider. Connecting businesses with smarter IT solutions.',
-    url: 'https://bwork.tech',
-    siteName: 'BWORK',
+    url: 'https://bwork.sa',
+    siteName: 'Beyond Work',
     images: [
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'BWORK IT Integration & Technology Solutions',
+        alt: 'Beyond Work IT Integration & Technology Solutions',
       },
     ],
     locale: 'en_US',
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'BWORK - IT Integration & Technology Solutions',
+    title: 'Beyond Work - IT Integration & Technology Solutions',
     description: 'Enterprise IT Integration and Technology Solutions provider. Connecting businesses with smarter IT solutions.',
     images: ['/images/og-image.jpg'],
     creator: '@bwork',
@@ -88,15 +88,15 @@ export default function RootLayout({
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'BWORK Technologies',
-    url: 'https://bwork.tech',
-    logo: 'https://bwork.tech/images/logo.png',
+    name: 'Beyond Work',
+    url: 'https://bwork.sa',
+    logo: 'https://bwork.sa/images/logo.png',
     description: 'Enterprise IT Integration and Technology Solutions provider specializing in cloud infrastructure, cybersecurity, and software development.',
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '+1-800-482-9675',
       contactType: 'Customer Service',
-      email: 'contact@bwork.tech',
+      email: 'support@bwork.sa',
       areaServed: 'US',
       availableLanguage: 'English',
     },
@@ -119,13 +119,13 @@ export default function RootLayout({
   const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'BWORK',
-    url: 'https://bwork.tech',
+    name: 'Beyond Work',
+    url: 'https://bwork.sa',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: 'https://bwork.tech/search?q={search_term_string}',
+        urlTemplate: 'https://bwork.sa/search?q={search_term_string}',
       },
       'query-input': 'required name=search_term_string',
     },

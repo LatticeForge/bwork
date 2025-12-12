@@ -13,7 +13,7 @@ export const API_ENDPOINTS = {
   BENEFITS: "/benefits",
   COMPANY_INFO: "/company-info",
   CONTACT: "/contact",
-
+  
   // Auth endpoints
   LOGIN: "/auth/login",
   REFRESH: "/auth/refresh",

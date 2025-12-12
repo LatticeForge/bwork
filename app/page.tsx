@@ -10,23 +10,23 @@ import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'BWORK - Enterprise IT Integration & Technology Solutions | Cloud, Security & Software',
-  description: 'BWORK delivers enterprise-grade IT integration, cloud infrastructure, cybersecurity, and custom software solutions. Transform your business with cutting-edge technology and expert implementation.',
+  title: 'Beyond Work - Enterprise IT Integration & Technology Solutions | Cloud, Security & Software',
+  description: 'Beyond Work delivers enterprise-grade IT integration, cloud infrastructure, cybersecurity, and custom software solutions. Transform your business with cutting-edge technology and expert implementation.',
   keywords: ['enterprise IT solutions', 'IT integration', 'cloud infrastructure', 'data center solutions', 'network infrastructure', 'cybersecurity services', 'software development', 'managed IT services', 'digital transformation', 'technology consulting'],
   alternates: {
-    canonical: 'https://bwork.tech',
+    canonical: 'https://bwork.sa',
   },
   openGraph: {
-    title: 'BWORK - Enterprise IT Integration & Technology Solutions',
-    description: 'Transform your business with enterprise-grade IT integration, cloud infrastructure, and cybersecurity solutions from BWORK.',
-    url: 'https://bwork.tech',
-    siteName: 'BWORK',
+    title: 'Beyond Work - Enterprise IT Integration & Technology Solutions',
+    description: 'Transform your business with enterprise-grade IT integration, cloud infrastructure, and cybersecurity solutions from Beyond Work.',
+    url: 'https://bwork.sa',
+    siteName: 'Beyond Work',
     images: [
       {
         url: '/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'BWORK Enterprise IT Solutions',
+        alt: 'Beyond Work Enterprise IT Solutions',
       },
     ],
     locale: 'en_US',
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'BWORK - Enterprise IT Integration & Technology Solutions',
-    description: 'Transform your business with enterprise-grade IT solutions from BWORK.',
+    title: 'Beyond Work - Enterprise IT Integration & Technology Solutions',
+    description: 'Transform your business with enterprise-grade IT solutions from Beyond Work.',
     images: ['/images/og-image.jpg'],
   },
 }

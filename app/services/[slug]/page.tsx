@@ -68,18 +68,18 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   if (!service) {
     return {
-      title: 'Service Not Found | BWORK',
+      title: 'Service Not Found | Beyond Work',
     };
   }
 
   return {
-    title: `${service.title} | BWORK`,
+    title: `${service.title} | Beyond Work`,
     description: service.description,
     openGraph: {
-      title: `${service.title} | BWORK`,
+      title: `${service.title} | Beyond Work`,
       description: service.description,
-      url: `https://bwork.tech/services/${service.slug}`,
-      siteName: 'BWORK',
+      url: `https://bwork.sa/services/${service.slug}`,
+      siteName: 'Beyond Work',
       type: 'website',
     },
   };

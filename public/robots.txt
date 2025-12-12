@@ -1,4 +1,4 @@
-# robots.txt for https://bwork.tech
+# robots.txt for https://bwork.sa
 
 # Allow all search engines
 User-agent: *
@@ -25,7 +25,7 @@ Disallow: /api/
 Disallow: /admin/
 
 # Sitemap location
-Sitemap: https://bwork.tech/sitemap.xml
+Sitemap: https://bwork.sa/sitemap.xml
 
 # Host (preferred domain)
-Host: https://bwork.tech
+Host: https://bwork.sa

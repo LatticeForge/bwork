@@ -39,7 +39,7 @@ export default function Header() {
           <Link href="/" className="group">
             <span className={`text-2xl font-bold group-hover:text-accent transition-colors duration-300 ${
               (pathname === '/' || isScrolled) ? 'text-secondary-900' : 'text-white'
-            }`}>BWORK</span>
+            }`}>Beyond Work</span>
           </Link>
 
           {/* Desktop Navigation */}
