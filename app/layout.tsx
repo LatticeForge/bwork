@@ -19,9 +19,9 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Beyond Work - IT Integration & Technology Solutions',
-  description: 'Enterprise IT Integration and Technology Solutions provider. We deliver cloud infrastructure, cybersecurity, software development, API integration, and IT consulting services to transform your business.',
-  keywords: ['IT integration', 'technology solutions', 'cloud infrastructure', 'cybersecurity', 'software development', 'API integration', 'IT consulting', 'DevOps', 'enterprise IT', 'digital transformation'],
+  title: 'Beyond Work - IT Integration & Technology Solutions Saudi Arabia',
+  description: 'Leading IT Integration and Technology Solutions provider in Saudi Arabia. We deliver cloud infrastructure, cybersecurity, software development, API integration, and IT consulting services to transform your business in KSA.',
+  keywords: ['IT integration', 'technology solutions', 'cloud infrastructure', 'cybersecurity', 'software development', 'API integration', 'IT consulting', 'DevOps', 'enterprise IT', 'digital transformation', 'IT solutions Saudi Arabia', 'IT integration KSA', 'enterprise IT Riyadh', 'technology services Jeddah', 'cloud services Saudi Arabia'],
   authors: [{ name: 'Beyond Work' }],
   creator: 'Beyond Work',
   publisher: 'Beyond Work',
@@ -44,16 +44,16 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   openGraph: {
-    title: 'Beyond Work - IT Integration & Technology Solutions',
-    description: 'Enterprise IT Integration and Technology Solutions provider. Connecting businesses with smarter IT solutions.',
+    title: 'Beyond Work - IT Integration & Technology Solutions Saudi Arabia',
+    description: 'Leading IT Integration and Technology Solutions provider in Saudi Arabia. Connecting businesses with smarter IT solutions.',
     url: 'https://bwork.sa',
     siteName: 'Beyond Work',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: '/images/bworkog.jpg',
         width: 1200,
         height: 630,
-        alt: 'Beyond Work IT Integration & Technology Solutions',
+        alt: 'Beyond Work IT Integration & Technology Solutions Saudi Arabia',
       },
     ],
     locale: 'en_US',
@@ -61,9 +61,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Beyond Work - IT Integration & Technology Solutions',
-    description: 'Enterprise IT Integration and Technology Solutions provider. Connecting businesses with smarter IT solutions.',
-    images: ['/images/og-image.jpg'],
+    title: 'Beyond Work - IT Integration & Technology Solutions Saudi Arabia',
+    description: 'Leading IT Integration and Technology Solutions provider in Saudi Arabia. Connecting businesses with smarter IT solutions.',
+    images: ['/images/bworkog.jpg'],
     creator: '@bwork',
   },
   robots: {
@@ -77,6 +77,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  verification: {
+    google: 'ZbjxzpLTvuubzBfLYJJ5CEfkDIe3I4oIoSvwIGd9Eu8',
+  },
 }
 
 export default function RootLayout({
@@ -84,29 +87,47 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // JSON-LD Structured Data for Organization
-  const organizationSchema = {
+  // JSON-LD Structured Data for LocalBusiness
+  const localBusinessSchema = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': 'LocalBusiness',
     name: 'Beyond Work',
     url: 'https://bwork.sa',
     logo: 'https://bwork.sa/images/logo.png',
-    description: 'Enterprise IT Integration and Technology Solutions provider specializing in cloud infrastructure, cybersecurity, and software development.',
-    contactPoint: {
-      '@type': 'ContactPoint',
-      telephone: '+1-800-482-9675',
-      contactType: 'Customer Service',
-      email: 'support@bwork.sa',
-      areaServed: 'US',
-      availableLanguage: 'English',
-    },
+    image: 'https://bwork.sa/images/bworkog.jpg',
+    description: 'Leading IT Integration and Technology Solutions provider in Saudi Arabia specializing in cloud infrastructure, cybersecurity, software development, and digital transformation.',
+    telephone: '+966535083449',
+    priceRange: '$$',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '100 Tech Center',
-      addressLocality: 'Silicon Valley',
-      addressRegion: 'CA',
-      postalCode: '94025',
-      addressCountry: 'US',
+      streetAddress: 'Khalid Bin Waleed Street, Malaz',
+      addressLocality: 'Riyadh',
+      addressRegion: 'Riyadh Province',
+      postalCode: '12836',
+      addressCountry: 'SA',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 24.7136,
+      longitude: 46.6753,
+    },
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+      opens: '09:00',
+      closes: '18:00',
+    },
+    areaServed: {
+      '@type': 'Country',
+      name: 'Saudi Arabia',
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+966535083449',
+      contactType: 'Customer Service',
+      email: 'support@bwork.sa',
+      areaServed: 'SA',
+      availableLanguage: ['English', 'Arabic'],
     },
     sameAs: [
       'https://www.linkedin.com/company/bwork',
@@ -136,7 +157,7 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
         />
         <script
           type="application/ld+json"
@@ -144,6 +165,9 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        <a href="#main-content" className="skip-to-main">
+          Skip to main content
+        </a>
         <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
         {children}
         <Chatbot />

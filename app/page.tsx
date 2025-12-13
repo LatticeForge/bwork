@@ -1,32 +1,48 @@
 import type { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
-import Partners from '@/components/Partners'
-import Services from '@/components/Services'
-import About from '@/components/About'
-import Process from '@/components/Process'
-import Benefits from '@/components/Benefits'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 
+// Lazy load below-the-fold components for better performance
+const Partners = dynamic(() => import('@/components/Partners'))
+const Services = dynamic(() => import('@/components/Services'))
+const About = dynamic(() => import('@/components/About'))
+const Process = dynamic(() => import('@/components/Process'))
+const Benefits = dynamic(() => import('@/components/Benefits'))
+
 export const metadata: Metadata = {
-  title: 'Beyond Work - Enterprise IT Integration & Technology Solutions | Cloud, Security & Software',
-  description: 'Beyond Work delivers enterprise-grade IT integration, cloud infrastructure, cybersecurity, and custom software solutions. Transform your business with cutting-edge technology and expert implementation.',
-  keywords: ['enterprise IT solutions', 'IT integration', 'cloud infrastructure', 'data center solutions', 'network infrastructure', 'cybersecurity services', 'software development', 'managed IT services', 'digital transformation', 'technology consulting'],
+  title: 'Beyond Work - IT Integration & Technology Solutions Saudi Arabia | Riyadh, KSA',
+  description: 'Leading IT Integration and Technology Solutions provider in Saudi Arabia. Enterprise cloud infrastructure, cybersecurity, network solutions, and digital transformation services in Riyadh, KSA. Contact us for professional IT consulting.',
+  keywords: [
+    'IT solutions Saudi Arabia',
+    'IT integration KSA',
+    'enterprise IT Riyadh',
+    'technology solutions Saudi Arabia',
+    'cloud infrastructure Riyadh',
+    'cybersecurity Saudi Arabia',
+    'network solutions KSA',
+    'data center Saudi Arabia',
+    'managed IT services Riyadh',
+    'digital transformation KSA',
+    'IT consulting Saudi Arabia',
+    'enterprise technology Riyadh',
+  ],
   alternates: {
     canonical: 'https://bwork.sa',
   },
   openGraph: {
-    title: 'Beyond Work - Enterprise IT Integration & Technology Solutions',
-    description: 'Transform your business with enterprise-grade IT integration, cloud infrastructure, and cybersecurity solutions from Beyond Work.',
+    title: 'Beyond Work - IT Integration & Technology Solutions Saudi Arabia',
+    description: 'Leading IT Integration and Technology Solutions provider in Saudi Arabia. Transform your business with enterprise-grade cloud, security, and network solutions.',
     url: 'https://bwork.sa',
     siteName: 'Beyond Work',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: '/images/bworkog.jpg',
         width: 1200,
         height: 630,
-        alt: 'Beyond Work Enterprise IT Solutions',
+        alt: 'Beyond Work - IT Integration & Technology Solutions Saudi Arabia',
       },
     ],
     locale: 'en_US',
@@ -34,9 +50,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Beyond Work - Enterprise IT Integration & Technology Solutions',
-    description: 'Transform your business with enterprise-grade IT solutions from Beyond Work.',
-    images: ['/images/og-image.jpg'],
+    title: 'Beyond Work - IT Solutions Saudi Arabia',
+    description: 'Leading IT Integration provider in Saudi Arabia. Enterprise technology solutions in Riyadh, KSA.',
+    images: ['/images/bworkog.jpg'],
   },
 }
 
@@ -44,7 +60,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="overflow-x-hidden max-w-full">
+      <main id="main-content" className="overflow-x-hidden max-w-full">
         <Hero />
         <Partners />
         <Services />

@@ -24,6 +24,48 @@
     width: 100%;
     position: relative;
   }
+
+  /* Enhanced focus styles for accessibility */
+  *:focus {
+    outline: 2px solid theme('colors.accent.DEFAULT');
+    outline-offset: 2px;
+  }
+
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  *:focus-visible {
+    outline: 2px solid theme('colors.accent.DEFAULT');
+    outline-offset: 2px;
+  }
+
+  /* Ensure images don't cause layout shift */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Respect user preferences for reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .btn-primary,
+    .btn-secondary {
+      border: 2px solid currentColor;
+    }
+  }
 }
 
 @layer components {
@@ -103,5 +145,38 @@
 
   .glow-accent-lg {
     box-shadow: 0 0 40px rgba(59, 130, 246, 0.5);
+  }
+
+  /* Screen reader only - hide visually but keep for screen readers */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Skip to main content link */
+  .skip-to-main {
+    @apply sr-only focus:not-sr-only;
+    @apply focus:absolute focus:top-4 focus:left-4 focus:z-50;
+    @apply focus:px-6 focus:py-3 focus:bg-accent focus:text-white;
+    @apply focus:rounded-lg focus:shadow-lg focus:font-semibold;
+    @apply focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2;
   }
 }
