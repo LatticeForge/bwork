@@ -8,24 +8,33 @@ export function middleware(request: NextRequest) {
   // Create response
   const response = NextResponse.next()
 
-  // Content Security Policy - Updated to allow Google Analytics
+  // Content Security Policy - Comprehensive policy for Next.js + Google Analytics
   const cspHeader = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://ssl.google-analytics.com https://tagmanager.google.com",
+    // Allow scripts from self, Google Analytics, Tag Manager, and inline (required for Next.js)
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://ssl.google-analytics.com https://tagmanager.google.com https://*.vercel.app",
+    // Allow styles from self, inline (required for Tailwind/Next.js), and Google Fonts
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://tagmanager.google.com",
+    // Allow fonts from self, Google Fonts, and data URIs
     "font-src 'self' https://fonts.gstatic.com data:",
-    "img-src 'self' data: https: blob: https://www.google-analytics.com https://ssl.google-analytics.com https://www.googletagmanager.com",
-    "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://*.google-analytics.com https://stats.g.doubleclick.net https://apis.bwork.sa https://*.vercel.app",
+    // Allow images from anywhere (flexible for CDNs and external sources)
+    "img-src 'self' data: https: blob: http: https://www.google-analytics.com https://ssl.google-analytics.com https://www.googletagmanager.com https://images.unsplash.com https://via.placeholder.com",
+    // Allow connections to APIs, Google Analytics, and Vercel
+    "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://*.google-analytics.com https://stats.g.doubleclick.net https://apis.bwork.sa https://*.vercel.app wss://*.vercel.app",
+    // Allow frames from Google Tag Manager
     "frame-src 'self' https://www.googletagmanager.com",
+    // Block object/embed tags
     "object-src 'none'",
+    // Restrict base tag
     "base-uri 'self'",
-    "form-action 'self'",
+    // Allow form submissions to self
+    "form-action 'self' https://apis.bwork.sa",
+    // Prevent site from being framed
     "frame-ancestors 'none'",
   ].join('; ')
 
-  // Set CSP header
-  // Temporarily disabled for testing - uncomment after testing
-  // response.headers.set('Content-Security-Policy', cspHeader)
+  // Set CSP header - Now enabled with comprehensive policy
+  response.headers.set('Content-Security-Policy', cspHeader)
 
   // Add custom header with pathname for debugging
   response.headers.set('x-pathname', pathname)
