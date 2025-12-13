@@ -8,24 +8,24 @@ export function middleware(request: NextRequest) {
   // Create response
   const response = NextResponse.next()
 
-  // Content Security Policy
+  // Content Security Policy - Updated to allow Google Analytics
   const cspHeader = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "font-src 'self' https://fonts.gstatic.com",
-    "img-src 'self' data: https: blob:",
-    "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://apis.bwork.sa",
-    "frame-src 'none'",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://ssl.google-analytics.com https://tagmanager.google.com",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://tagmanager.google.com",
+    "font-src 'self' https://fonts.gstatic.com data:",
+    "img-src 'self' data: https: blob: https://www.google-analytics.com https://ssl.google-analytics.com https://www.googletagmanager.com",
+    "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://*.google-analytics.com https://stats.g.doubleclick.net https://apis.bwork.sa https://*.vercel.app",
+    "frame-src 'self' https://www.googletagmanager.com",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
     "frame-ancestors 'none'",
-    "upgrade-insecure-requests",
   ].join('; ')
 
   // Set CSP header
-  response.headers.set('Content-Security-Policy', cspHeader)
+  // Temporarily disabled for testing - uncomment after testing
+  // response.headers.set('Content-Security-Policy', cspHeader)
 
   // Add custom header with pathname for debugging
   response.headers.set('x-pathname', pathname)
