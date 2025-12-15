@@ -13,10 +13,10 @@ export function middleware(request: NextRequest) {
     "default-src 'self'",
     // Allow scripts from self, Google Analytics, Tag Manager, and inline (required for Next.js)
     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://ssl.google-analytics.com https://tagmanager.google.com https://*.vercel.app",
-    // Allow styles from self, inline (required for Tailwind/Next.js), and Google Fonts
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://tagmanager.google.com",
-    // Allow fonts from self, Google Fonts, and data URIs
-    "font-src 'self' https://fonts.gstatic.com data:",
+    // Allow styles from self, inline (required for Tailwind/Next.js), Google Fonts, and Vercel
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://tagmanager.google.com https://*.vercel.app",
+    // Allow fonts from self, Google Fonts, Vercel, and data URIs
+    "font-src 'self' https://fonts.gstatic.com data: https://*.vercel.app",
     // Allow images from anywhere (flexible for CDNs and external sources)
     "img-src 'self' data: https: blob: http: https://www.google-analytics.com https://ssl.google-analytics.com https://www.googletagmanager.com https://images.unsplash.com https://via.placeholder.com",
     // Allow connections to APIs, Google Analytics, and Vercel
@@ -31,6 +31,10 @@ export function middleware(request: NextRequest) {
     "form-action 'self' https://apis.bwork.sa",
     // Prevent site from being framed
     "frame-ancestors 'none'",
+    // Allow service workers and web workers
+    "worker-src 'self' blob:",
+    // Allow PWA manifest
+    "manifest-src 'self'",
   ].join('; ')
 
   // Set CSP header - Now enabled with comprehensive policy
