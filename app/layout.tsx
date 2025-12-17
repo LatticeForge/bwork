@@ -1,8 +1,13 @@
 import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
+import dynamic from 'next/dynamic'
 import '../styles/globals.css'
-import Chatbot from '@/components/Chatbot'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
+
+const Chatbot = dynamic(() => import('@/components/Chatbot'), {
+  ssr: false,
+  loading: () => null,
+})
 
 const inter = Inter({
   subsets: ['latin'],
@@ -80,6 +85,11 @@ export const metadata: Metadata = {
   verification: {
     google: 'ZbjxzpLTvuubzBfLYJJ5CEfkDIe3I4oIoSvwIGd9Eu8',
   },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
 }
 
 export default function RootLayout({
@@ -155,14 +165,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
       </head>
       <body className={inter.className}>
         <a href="#main-content" className="skip-to-main">
@@ -171,6 +177,14 @@ export default function RootLayout({
         <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
         {children}
         <Chatbot />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
       </body>
     </html>
   )

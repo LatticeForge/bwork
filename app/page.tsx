@@ -6,11 +6,21 @@ import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 
 // Lazy load below-the-fold components for better performance
-const Partners = dynamic(() => import('@/components/Partners'))
-const Services = dynamic(() => import('@/components/Services'))
-const About = dynamic(() => import('@/components/About'))
-const Process = dynamic(() => import('@/components/Process'))
-const Benefits = dynamic(() => import('@/components/Benefits'))
+const Partners = dynamic(() => import('@/components/Partners'), {
+  loading: () => <div className="h-32 bg-secondary-50" />,
+})
+const Services = dynamic(() => import('@/components/Services'), {
+  loading: () => <div className="h-96 bg-secondary-50" />,
+})
+const About = dynamic(() => import('@/components/About'), {
+  loading: () => <div className="h-96 bg-secondary-50" />,
+})
+const Process = dynamic(() => import('@/components/Process'), {
+  loading: () => <div className="h-96 bg-secondary-50" />,
+})
+const Benefits = dynamic(() => import('@/components/Benefits'), {
+  loading: () => <div className="h-96 bg-secondary-50" />,
+})
 
 export const metadata: Metadata = {
   title: 'Beyond Work - IT Integration & Technology Solutions Saudi Arabia | Riyadh, KSA',

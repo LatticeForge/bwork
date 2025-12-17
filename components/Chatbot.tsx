@@ -405,6 +405,7 @@ export default function Chatbot() {
                     <input
                       type="text"
                       placeholder="Name *"
+                      aria-label="Your name"
                       required
                       value={inquiryForm.name}
                       onChange={(e) => setInquiryForm({ ...inquiryForm, name: e.target.value })}
@@ -413,6 +414,7 @@ export default function Chatbot() {
                     <input
                       type="text"
                       placeholder="Company"
+                      aria-label="Company name"
                       value={inquiryForm.company}
                       onChange={(e) => setInquiryForm({ ...inquiryForm, company: e.target.value })}
                       className="px-3 py-2 border border-secondary-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -421,6 +423,7 @@ export default function Chatbot() {
                   <input
                     type="email"
                     placeholder="Email *"
+                    aria-label="Email address"
                     required
                     value={inquiryForm.email}
                     onChange={(e) => setInquiryForm({ ...inquiryForm, email: e.target.value })}
@@ -429,6 +432,7 @@ export default function Chatbot() {
                   <input
                     type="tel"
                     placeholder="Phone"
+                    aria-label="Phone number"
                     value={inquiryForm.phone}
                     onChange={(e) => setInquiryForm({ ...inquiryForm, phone: e.target.value })}
                     className="w-full px-3 py-2 border border-secondary-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -436,6 +440,7 @@ export default function Chatbot() {
                   <select
                     value={inquiryForm.projectType}
                     onChange={(e) => setInquiryForm({ ...inquiryForm, projectType: e.target.value })}
+                    aria-label="Project type"
                     className="w-full px-3 py-2 border border-secondary-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 text-secondary-600"
                   >
                     <option value="">Project Type</option>
@@ -449,6 +454,7 @@ export default function Chatbot() {
                   </select>
                   <textarea
                     placeholder="Your message *"
+                    aria-label="Your message"
                     required
                     value={inquiryForm.message}
                     onChange={(e) => setInquiryForm({ ...inquiryForm, message: e.target.value })}
@@ -489,6 +495,7 @@ export default function Chatbot() {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Type your message..."
+                    aria-label="Chat message input"
                     className="flex-1 px-4 py-3 border border-secondary-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
                   />
                   <button

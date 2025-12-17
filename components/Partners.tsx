@@ -69,6 +69,8 @@ export default function Partners() {
                     src={partner.logo}
                     alt={`${partner.name} logo`}
                     fill
+                    loading="lazy"
+                    sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
                     className="object-contain"
                   />
                 </div>

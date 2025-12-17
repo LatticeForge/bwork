@@ -34,9 +34,20 @@ export default function Footer() {
 
   useEffect(() => {
     const loadCompanyInfo = async () => {
-      const response = await fetchCompanyInfo()
-      if (response.success && response.data) {
-        setCompanyInfo(response.data)
+      try {
+        // Add timeout wrapper to prevent hanging on slow connections
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 3000) // 3 second timeout
+
+        const response = await fetchCompanyInfo()
+        clearTimeout(timeoutId)
+
+        if (response.success && response.data) {
+          setCompanyInfo(response.data)
+        }
+      } catch (error) {
+        console.error('Failed to load company info:', error)
+        // Component already has fallback values, so this is safe
       }
     }
     loadCompanyInfo()
