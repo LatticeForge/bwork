@@ -24,40 +24,24 @@ interface Service {
 async function getServiceBySlug(slug: string): Promise<Service | null> {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://apis.bwork.sa/api';
-    console.log('🔍 Fetching services from:', `${apiUrl}/services`);
-    console.log('🔍 Looking for slug:', slug);
 
     const res = await fetch(`${apiUrl}/services`, {
       next: { revalidate: 60 }, // Revalidate every 60 seconds
     });
 
     if (!res.ok) {
-      console.error('❌ API request failed:', res.status, res.statusText);
       return null;
     }
 
     const data = await res.json();
-    console.log('📦 API Response:', data);
 
     if (data.success && data.data?.services) {
-      console.log('✅ Found', data.data.services.length, 'services');
-      console.log('📋 All slugs:', data.data.services.map((s: Service) => s.slug));
-
       const service = data.data.services.find((s: Service) => s.slug === slug);
-
-      if (service) {
-        console.log('✅ Found matching service:', service);
-      } else {
-        console.log('❌ No service found with slug:', slug);
-      }
-
       return service || null;
     }
 
-    console.log('❌ Invalid API response structure');
     return null;
   } catch (error) {
-    console.error('❌ Error fetching service:', error);
     return null;
   }
 }

@@ -17,6 +17,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const pathname = usePathname()
   const mobileMenuRef = useRef<HTMLDivElement>(null)
+  const hamburgerButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,7 +41,12 @@ export default function Header() {
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target as Node)) {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(e.target as Node) &&
+        hamburgerButtonRef.current &&
+        !hamburgerButtonRef.current.contains(e.target as Node)
+      ) {
         setMobileMenuOpen(false)
       }
     }
@@ -94,6 +100,7 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
+            ref={hamburgerButtonRef}
             className="lg:hidden p-2 rounded-lg hover:bg-secondary-100 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
@@ -132,27 +139,7 @@ export default function Header() {
               role="menu"
               aria-label="Mobile menu"
             >
-              <div className="flex items-center justify-between px-4 pt-4 pb-2 border-b border-secondary-200">
-                <span className="text-xl font-bold text-secondary-900">Beyond Work</span>
-                <button
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 rounded-lg hover:bg-secondary-100 transition-colors"
-                  aria-label="Close menu"
-                >
-                  <svg
-                    className="w-6 h-6 text-secondary-900"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              <div className="flex flex-col space-y-4 pt-4">
+              <div className="flex flex-col space-y-4 pt-4 pb-4">
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
@@ -164,16 +151,6 @@ export default function Header() {
                     {item.name}
                   </Link>
                 ))}
-                {pathname === '/' && (
-                  <Link
-                    href="/#contact"
-                    role="menuitem"
-                    className="btn-primary mx-4"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Get a Consultation
-                  </Link>
-                )}
               </div>
             </motion.div>
           )}
