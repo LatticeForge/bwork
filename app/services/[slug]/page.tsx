@@ -72,15 +72,48 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
   }
 
+  // Generate keywords from service title and sub-services
+  const keywords = [
+    service.title,
+    ...service.subServices.slice(0, 5), // First 5 sub-services
+    'Saudi Arabia',
+    'KSA',
+    'Riyadh',
+  ];
+
   return {
-    title: `${service.title} | Beyond Work`,
-    description: service.description,
+    title: `${service.title} | Beyond Work - IT Solutions Saudi Arabia`,
+    description: `${service.description} ${service.subServices.slice(0, 3).join(', ')}. Professional IT services in Saudi Arabia.`,
+    keywords,
+    alternates: {
+      canonical: `https://bwork.sa/services/${service.slug}`,
+    },
     openGraph: {
       title: `${service.title} | Beyond Work`,
       description: service.description,
       url: `https://bwork.sa/services/${service.slug}`,
       siteName: 'Beyond Work',
+      images: [
+        {
+          url: '/images/bworkog.jpg',
+          width: 1200,
+          height: 630,
+          alt: `${service.title} - Beyond Work IT Solutions`,
+        },
+      ],
+      locale: 'en_US',
       type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${service.title} | Beyond Work`,
+      description: service.description,
+      images: ['/images/bworkog.jpg'],
+      creator: '@bwork',
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
   };
 }

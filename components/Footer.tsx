@@ -149,13 +149,13 @@ export default function Footer() {
               &copy; {new Date().getFullYear()} {companyInfo?.name || 'BWORK'} Technologies. All rights reserved.
             </p>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-              <Link href="#" className="text-secondary-400 hover:text-accent text-sm transition-colors">
+              <Link href="/privacy-policy" className="text-secondary-400 hover:text-accent text-sm transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="#" className="text-secondary-400 hover:text-accent text-sm transition-colors">
+              <Link href="/terms-of-service" className="text-secondary-400 hover:text-accent text-sm transition-colors">
                 Terms of Service
               </Link>
-              <Link href="#" className="text-secondary-400 hover:text-accent text-sm transition-colors">
+              <Link href="/cookie-policy" className="text-secondary-400 hover:text-accent text-sm transition-colors">
                 Cookie Policy
               </Link>
             </div>

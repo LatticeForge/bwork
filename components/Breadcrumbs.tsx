@@ -26,7 +26,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
       '@type': 'ListItem',
       position: index + 1,
       name: item.label,
-      item: `https://bwork.tech${item.href}`,
+      item: `https://bwork.sa${item.href}`,
     })),
   }
 

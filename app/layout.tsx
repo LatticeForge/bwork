@@ -9,6 +9,11 @@ const Chatbot = dynamic(() => import('@/components/Chatbot'), {
   loading: () => null,
 })
 
+const CookieConsent = dynamic(() => import('@/components/CookieConsent'), {
+  ssr: false,
+  loading: () => null,
+})
+
 const inter = Inter({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
@@ -177,6 +182,7 @@ export default function RootLayout({
         <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
         {children}
         <Chatbot />
+        <CookieConsent />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}

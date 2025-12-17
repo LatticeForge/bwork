@@ -1,29 +1,59 @@
 'use client'
 
 import Script from 'next/script'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { initPerformanceMonitoring } from '@/lib/performance'
+import { shouldLoadGA4, hasSetPreferences } from '@/lib/cookieConsent'
 
 interface GoogleAnalyticsProps {
   measurementId: string
 }
 
 export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
+  const [hasConsent, setHasConsent] = useState(false)
+  const [isReady, setIsReady] = useState(false)
+
   // Only load in production or when explicitly enabled
   const isEnabled = process.env.NODE_ENV === 'production' || process.env.NEXT_PUBLIC_GA_ENABLED === 'true'
 
   useEffect(() => {
+    // Check initial consent status
+    const checkConsent = () => {
+      const consentGiven = shouldLoadGA4()
+      setHasConsent(consentGiven)
+      setIsReady(true)
+    }
+
+    // Check consent on mount
+    checkConsent()
+
+    // Listen for consent changes
+    const handleConsentUpdate = () => {
+      checkConsent()
+    }
+
+    window.addEventListener('cookieConsentUpdated', handleConsentUpdate)
+    window.addEventListener('cookieConsentReset', handleConsentUpdate)
+
+    return () => {
+      window.removeEventListener('cookieConsentUpdated', handleConsentUpdate)
+      window.removeEventListener('cookieConsentReset', handleConsentUpdate)
+    }
+  }, [])
+
+  useEffect(() => {
     // Initialize performance monitoring after GA loads
-    if (isEnabled && measurementId) {
+    if (isEnabled && measurementId && hasConsent) {
       const timer = setTimeout(() => {
         initPerformanceMonitoring()
       }, 1000)
 
       return () => clearTimeout(timer)
     }
-  }, [isEnabled, measurementId])
+  }, [isEnabled, measurementId, hasConsent])
 
-  if (!measurementId || !isEnabled) {
+  // Don't render until we've checked consent status
+  if (!isReady || !measurementId || !isEnabled || !hasConsent) {
     return null
   }
 
@@ -41,6 +71,7 @@ export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps)
           gtag('config', '${measurementId}', {
             page_path: window.location.pathname,
             send_page_view: true,
+            anonymize_ip: true,
           });
         `}
       </Script>

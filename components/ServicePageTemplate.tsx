@@ -42,13 +42,13 @@ export default function ServicePageTemplate({
     description: description,
     provider: {
       '@type': 'Organization',
-      name: 'BWORK Technologies',
-      url: 'https://bwork.tech',
+      name: 'Beyond Work',
+      url: 'https://bwork.sa',
     },
     serviceType: title,
     areaServed: {
       '@type': 'Country',
-      name: 'United States',
+      name: 'Saudi Arabia',
     },
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
@@ -64,11 +64,55 @@ export default function ServicePageTemplate({
     },
   }
 
+  // JSON-LD FAQ schema for better SEO
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: `What is ${title}?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: description,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `What are the key features of ${title}?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: features.map(f => f.title).join(', ') + '.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `What are the benefits of ${title}?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: benefits.join(', ') + '.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `Where is ${title} available?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Our services are available across Saudi Arabia, including Riyadh, Jeddah, Dammam, and all major cities in KSA.',
+        },
+      },
+    ],
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <Header />
       <main className="overflow-x-hidden max-w-full">

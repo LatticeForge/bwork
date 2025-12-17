@@ -79,8 +79,11 @@ export default function Chatbot() {
   }
 
   // Save individual user message to backend
-  const saveMessageToBackend = async (message: string) => {
+  const saveMessageToBackend = async (message: string, retryCount = 0) => {
     try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'}/api/chat-enquiry`, {
         method: 'POST',
         headers: {
@@ -89,15 +92,30 @@ export default function Chatbot() {
         body: JSON.stringify({
           message,
         }),
+        signal: controller.signal,
       })
+
+      clearTimeout(timeoutId)
 
       if (response.ok) {
         console.log('✅ Message saved successfully')
+      } else if (response.status === 429 && retryCount < 2) {
+        // Rate limited, retry after delay
+        console.log('⏳ Rate limited, retrying in 5 seconds...')
+        setTimeout(() => saveMessageToBackend(message, retryCount + 1), 5000)
       } else {
         console.error('Failed to save message:', await response.text())
       }
     } catch (error) {
-      console.error('Error saving message:', error)
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.error('Request timeout saving message')
+        if (retryCount < 2) {
+          setTimeout(() => saveMessageToBackend(message, retryCount + 1), 3000)
+        }
+      } else {
+        console.error('Error saving message:', error)
+        // Silently fail for message logging - don't interrupt user experience
+      }
     }
   }
 
@@ -148,14 +166,21 @@ export default function Chatbot() {
   const handleInquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    // Show loading message
+    addBotMessage("Processing your inquiry...", false)
+
     try {
-      // User messages are already auto-saved when they send each message
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 15000) // 15 second timeout
 
       const response = await fetch('/api/inquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(inquiryForm),
+        signal: controller.signal,
       })
+
+      clearTimeout(timeoutId)
 
       if (response.ok) {
         addBotMessage(
@@ -172,16 +197,34 @@ export default function Chatbot() {
           message: '',
         })
       } else {
-        addBotMessage(
-          "I apologize, but there was an error submitting your inquiry. Please try again or contact us directly at info@bwork.com",
-          true
-        )
+        const data = await response.json().catch(() => ({}))
+        let errorMessage = "I apologize, but there was an error submitting your inquiry. "
+
+        if (response.status === 429) {
+          errorMessage += "You've submitted too many requests. Please wait a few minutes and try again, or contact us directly at support@bwork.sa"
+        } else if (response.status === 400 && data.details) {
+          errorMessage += "Please check your form data and try again, or contact us directly at support@bwork.sa"
+        } else if (response.status >= 500) {
+          errorMessage += "Our server is experiencing issues. Please try again in a few moments or contact us directly at support@bwork.sa"
+        } else {
+          errorMessage += "Please try again or contact us directly at support@bwork.sa"
+        }
+
+        addBotMessage(errorMessage, true)
       }
     } catch (error) {
-      addBotMessage(
-        "I apologize, but there was an error submitting your inquiry. Please try again or contact us directly at info@bwork.com",
-        true
-      )
+      let errorMessage = "I apologize, but there was an error submitting your inquiry. "
+
+      if (error instanceof Error && error.name === 'AbortError') {
+        errorMessage += "The request timed out. Please check your internet connection and try again, or contact us directly at support@bwork.sa"
+      } else if (error instanceof Error && (error.message.includes('fetch') || error.message.includes('network'))) {
+        errorMessage += "Please check your internet connection and try again, or contact us directly at support@bwork.sa"
+      } else {
+        errorMessage += "Please try again or contact us directly at support@bwork.sa"
+      }
+
+      addBotMessage(errorMessage, true)
+      console.error('Inquiry submission error:', error)
     }
   }
 

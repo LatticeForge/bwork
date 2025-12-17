@@ -14,7 +14,9 @@ export default function ContactFullPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitMessage, setSubmitMessage] = useState('')
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
+  const [retryCount, setRetryCount] = useState(0)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -32,11 +34,16 @@ export default function ContactFullPage() {
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent, isRetry = false) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitMessage('')
+    setSubmitStatus('idle')
     setFieldErrors({})
+
+    if (!isRetry) {
+      setRetryCount(0)
+    }
 
     try {
       const response = await fetch('/api/contact', {
@@ -48,9 +55,19 @@ export default function ContactFullPage() {
       const data = await response.json()
 
       if (response.ok) {
-        setSubmitMessage('Thank you! We will get back to you soon.')
+        setSubmitStatus('success')
+        setSubmitMessage(data.message || 'Thank you! We\'ll get back to you soon.')
         setFormData({ name: '', email: '', subject: '', message: '' })
+        setRetryCount(0)
+
+        // Clear success message after 8 seconds
+        setTimeout(() => {
+          setSubmitMessage('')
+          setSubmitStatus('idle')
+        }, 8000)
       } else {
+        setSubmitStatus('error')
+
         // Check if there are field-specific validation errors
         if (data.details && data.details.length > 0) {
           const errors: Record<string, string> = {}
@@ -58,16 +75,55 @@ export default function ContactFullPage() {
             errors[detail.field] = detail.message
           })
           setFieldErrors(errors)
-          // Don't set a general message, only show field-specific errors
+          setSubmitMessage('Please correct the errors above and try again.')
         } else {
-          setSubmitMessage(data.error || 'Something went wrong. Please try again.')
+          // Handle specific error types
+          const errorMessage = data.error || 'Something went wrong. Please try again.'
+
+          if (response.status === 429 || errorMessage.includes('rate limit') || errorMessage.includes('Too many')) {
+            setSubmitMessage('You\'ve submitted too many requests. Please wait a few minutes and try again.')
+          } else if (errorMessage.includes('network') || errorMessage.includes('offline')) {
+            setSubmitMessage('Network error. Please check your connection and try again.')
+          } else if (errorMessage.includes('timeout')) {
+            setSubmitMessage('Request timed out. Please try again.')
+          } else {
+            setSubmitMessage(errorMessage)
+          }
         }
+
+        // Clear error message after 10 seconds
+        setTimeout(() => {
+          setSubmitMessage('')
+          setSubmitStatus('idle')
+        }, 10000)
       }
     } catch (error) {
-      setSubmitMessage('Failed to send message. Please try again.')
+      setSubmitStatus('error')
+      const errorMsg = error instanceof Error ? error.message : 'An unexpected error occurred'
+
+      if (errorMsg.includes('fetch') || errorMsg.includes('network')) {
+        setSubmitMessage('Network error. Please check your connection and try again.')
+      } else {
+        setSubmitMessage('An unexpected error occurred. Please try again or contact us directly.')
+      }
+
+      console.error('Contact form error:', error)
+
+      setTimeout(() => {
+        setSubmitMessage('')
+        setSubmitStatus('idle')
+      }, 10000)
     } finally {
       setIsSubmitting(false)
-      setTimeout(() => setSubmitMessage(''), 5000)
+    }
+  }
+
+  const handleRetry = (e: React.FormEvent) => {
+    if (retryCount < 3) {
+      setRetryCount(prev => prev + 1)
+      handleSubmit(e, true)
+    } else {
+      setSubmitMessage('Maximum retry attempts reached. Please try again later or contact us directly.')
     }
   }
 
@@ -330,22 +386,70 @@ export default function ContactFullPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed min-h-[48px]"
+                    className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed min-h-[48px] flex items-center justify-center gap-2"
                   >
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        {submitStatus === 'success' ? (
+                          <>
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Sent Successfully!</span>
+                          </>
+                        ) : (
+                          'Send Message'
+                        )}
+                      </>
+                    )}
                   </button>
 
                   {/* Submit Message */}
                   {submitMessage && (
-                    <motion.p
+                    <motion.div
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className={`text-center font-medium ${
-                        submitMessage.includes('Thank you') || submitMessage.toLowerCase().includes('success') ? 'text-green-600' : 'text-red-600'
+                      className={`p-4 rounded-lg ${
+                        submitStatus === 'success'
+                          ? 'bg-green-50 border border-green-200'
+                          : 'bg-red-50 border border-red-200'
                       }`}
                     >
-                      {submitMessage}
-                    </motion.p>
+                      <div className="flex items-start gap-3">
+                        {submitStatus === 'success' ? (
+                          <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        ) : (
+                          <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        )}
+                        <div className="flex-1">
+                          <p className={`text-sm font-medium ${
+                            submitStatus === 'success' ? 'text-green-800' : 'text-red-800'
+                          }`}>
+                            {submitMessage}
+                          </p>
+                          {submitStatus === 'error' && !submitMessage.includes('rate limit') && !submitMessage.includes('Maximum retry') && retryCount < 3 && (
+                            <button
+                              onClick={handleRetry}
+                              className="mt-2 text-sm text-red-600 hover:text-red-700 font-medium underline"
+                            >
+                              Try Again
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
                   )}
                 </form>
               </motion.div>
