@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { fetchCompanyInfo, type CompanyInfo } from '@/lib/api'
 import Header from './Header'
 import Footer from './Footer'
 
@@ -17,6 +18,21 @@ export default function ContactFullPage() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [retryCount, setRetryCount] = useState(0)
+  const [companyInfo, setCompanyInfo] = useState<CompanyInfo | null>(null)
+
+  useEffect(() => {
+    const loadCompanyInfo = async () => {
+      try {
+        const response = await fetchCompanyInfo()
+        if (response.success && response.data) {
+          setCompanyInfo(response.data)
+        }
+      } catch (error) {
+        console.error('Failed to load company info:', error)
+      }
+    }
+    loadCompanyInfo()
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -144,7 +160,7 @@ export default function ContactFullPage() {
             >
               <h1 className="heading-xl mb-6">Get in Touch</h1>
               <p className="text-xl text-secondary-200 leading-relaxed">
-                Ready to transform your IT infrastructure? Let's discuss your project and how BWORK can help you achieve your goals.
+                Ready to transform your IT infrastructure? Let's discuss your project and how Beyond Work can help you achieve your goals.
               </p>
             </motion.div>
           </div>
@@ -182,8 +198,8 @@ export default function ContactFullPage() {
                         </svg>
                       ),
                       title: 'Email',
-                      content: 'contact@bwork.tech',
-                      link: 'mailto:contact@bwork.tech',
+                      content: companyInfo?.contact.email || 'support@bwork.sa',
+                      link: `mailto:${companyInfo?.contact.email || 'support@bwork.sa'}`,
                     },
                     {
                       icon: (
@@ -197,8 +213,8 @@ export default function ContactFullPage() {
                         </svg>
                       ),
                       title: 'Phone',
-                      content: '+1 (800) IT-BWORK',
-                      link: 'tel:+18004829675',
+                      content: companyInfo?.contact.phoneFormatted || '+966 53 508 3449',
+                      link: companyInfo?.contact.phoneLink || 'tel:+966535083449',
                     },
                     {
                       icon: (
@@ -218,8 +234,9 @@ export default function ContactFullPage() {
                         </svg>
                       ),
                       title: 'Office',
-                      content: '100 Tech Center, Silicon Valley, CA 94025',
+                      content: companyInfo?.office.fullAddress || 'Malaz, Riyadh Khalid Bin Waleed Street, Jeddah',
                       link: null,
+                      isAddress: true,
                     },
                     {
                       icon: (
@@ -233,7 +250,7 @@ export default function ContactFullPage() {
                         </svg>
                       ),
                       title: 'Business Hours',
-                      content: 'Mon-Fri: 8:00 AM - 6:00 PM PST',
+                      content: companyInfo?.businessHours.weekdays || 'Mon-Fri: 8:00 AM - 6:00 PM',
                       link: null,
                     },
                   ].map((item, index) => (
@@ -250,7 +267,28 @@ export default function ContactFullPage() {
                       </div>
                       <div>
                         <div className="font-semibold text-secondary-900 mb-1">{item.title}</div>
-                        {item.link ? (
+                        {item.isAddress && companyInfo?.office ? (
+                          <div className="text-secondary-600">
+                            {companyInfo.office.addressLine1 && companyInfo.office.addressLine2 ? (
+                              <>
+                                <div>{companyInfo.office.addressLine1}</div>
+                                <div>{companyInfo.office.addressLine2}</div>
+                              </>
+                            ) : (
+                              // Split at "Riyadh " to separate into two lines
+                              (() => {
+                                const addr = companyInfo.office.fullAddress
+                                const splitIndex = addr.indexOf('Riyadh ') + 6
+                                return (
+                                  <>
+                                    <div>{addr.substring(0, splitIndex).trim()}</div>
+                                    <div>{addr.substring(splitIndex).trim()}</div>
+                                  </>
+                                )
+                              })()
+                            )}
+                          </div>
+                        ) : item.link ? (
                           <a
                             href={item.link}
                             className="text-secondary-600 hover:text-accent transition-colors"

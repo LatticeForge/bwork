@@ -3,6 +3,8 @@ import { Inter, Poppins } from 'next/font/google'
 import dynamic from 'next/dynamic'
 import '../styles/globals.css'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
+import { generateLocalBusinessSchema } from '@/lib/schemas'
+import { GET } from './api/company-info/route'
 
 const Chatbot = dynamic(() => import('@/components/Chatbot'), {
   ssr: false,
@@ -97,59 +99,22 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  // JSON-LD Structured Data for LocalBusiness
-  const localBusinessSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: 'Beyond Work',
-    url: 'https://bwork.sa',
-    logo: 'https://bwork.sa/images/logo.png',
-    image: 'https://bwork.sa/images/bworkog.jpg',
-    description: 'Leading IT Integration and Technology Solutions provider in Saudi Arabia specializing in cloud infrastructure, cybersecurity, software development, and digital transformation.',
-    telephone: '+966535083449',
-    priceRange: '$$',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Khalid Bin Waleed Street, Malaz',
-      addressLocality: 'Riyadh',
-      addressRegion: 'Riyadh Province',
-      postalCode: '12836',
-      addressCountry: 'SA',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 24.7136,
-      longitude: 46.6753,
-    },
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
-      opens: '09:00',
-      closes: '18:00',
-    },
-    areaServed: {
-      '@type': 'Country',
-      name: 'Saudi Arabia',
-    },
-    contactPoint: {
-      '@type': 'ContactPoint',
-      telephone: '+966535083449',
-      contactType: 'Customer Service',
-      email: 'support@bwork.sa',
-      areaServed: 'SA',
-      availableLanguage: ['English', 'Arabic'],
-    },
-    sameAs: [
-      'https://www.linkedin.com/company/bwork',
-      'https://twitter.com/bwork',
-      'https://www.facebook.com/bwork',
-    ],
+  // Fetch company info from local API route
+  let companyInfo = null
+  try {
+    const response = await GET()
+    companyInfo = await response.json()
+  } catch (error) {
+    console.error('Failed to fetch company info:', error)
   }
+
+  // JSON-LD Structured Data for LocalBusiness using API data
+  const localBusinessSchema = generateLocalBusinessSchema(companyInfo)
 
   // JSON-LD Structured Data for WebSite with Search
   const websiteSchema = {

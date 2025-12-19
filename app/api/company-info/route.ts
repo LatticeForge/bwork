@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   const companyInfo = {
-    name: 'BWORK Technologies',
+    name: 'Beyond Work',
     tagline: 'Enterprise IT Integration & Technology Solutions',
     contact: {
       email: 'contact@bwork.tech',
@@ -11,12 +11,14 @@ export async function GET() {
       phoneLink: 'tel:+18004829675',
     },
     office: {
-      address: '100 Tech Center',
-      city: 'Silicon Valley',
-      state: 'CA',
-      zip: '94025',
-      country: 'United States',
-      fullAddress: '100 Tech Center, Silicon Valley, CA 94025',
+      address: 'Khalid Bin Waleed Street',
+      city: 'Jeddah',
+      state: 'Malaz',
+      zip: '',
+      country: 'Saudi Arabia',
+      fullAddress: 'Malaz, Riyadh Khalid Bin Waleed Street, Jeddah',
+      addressLine1: 'Malaz, Riyadh',
+      addressLine2: 'Khalid Bin Waleed Street, Jeddah',
     },
     businessHours: {
       weekdays: 'Mon-Fri: 8:00 AM - 6:00 PM PST',

@@ -56,6 +56,8 @@ export interface CompanyInfo {
     zip: string;
     country: string;
     fullAddress: string;
+    addressLine1?: string;
+    addressLine2?: string;
   };
   businessHours: {
     weekdays: string;

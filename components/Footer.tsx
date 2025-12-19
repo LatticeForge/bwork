@@ -2,23 +2,18 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { fetchCompanyInfo, type CompanyInfo } from '@/lib/api'
+import { fetchCompanyInfo, fetchServices, type CompanyInfo, type Service } from '@/lib/api'
 
 const footerLinks = {
   company: [
     { name: 'About Us', href: '/#about' },
     { name: 'Services', href: '/#services' },
   ],
-  services: [
-    { name: 'Cloud Infrastructure', href: '/services/cloud-infrastructure' },
-    { name: 'Network Solutions', href: '/services/active-networking' },
-    { name: 'Structured Cabling', href: '/services/passive-cabling' },
-    { name: 'Data Center', href: '/services/data-center' },
-  ],
   support: [
     { name: 'Contact Us', href: '/contact' },
-    { name: 'Privacy Policy', href: '#' },
-    { name: 'Terms of Service', href: '#' },
+    { name: 'Privacy Policy', href: '/privacy-policy' },
+    { name: 'Terms of Service', href: '/terms-of-service' },
+    { name: 'Cookie Policy', href: '/cookie-policy' },
   ],
 }
 
@@ -31,6 +26,7 @@ const socialIconPaths: Record<string, string> = {
 
 export default function Footer() {
   const [companyInfo, setCompanyInfo] = useState<CompanyInfo | null>(null)
+  const [services, setServices] = useState<Service[]>([])
 
   useEffect(() => {
     const loadCompanyInfo = async () => {
@@ -50,18 +46,32 @@ export default function Footer() {
         // Component already has fallback values, so this is safe
       }
     }
+
+    const loadServices = async () => {
+      try {
+        const response = await fetchServices()
+        if (response.success && response.data) {
+          setServices(response.data.services)
+        }
+      } catch (error) {
+        console.error('Failed to load services:', error)
+        // Component will show fallback services if this fails
+      }
+    }
+
     loadCompanyInfo()
+    loadServices()
   }, [])
   return (
     <footer className="bg-secondary-900 text-white">
       <div className="container-custom section-padding">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
           {/* Brand */}
           <div className="col-span-1 sm:col-span-2 md:col-span-4 lg:col-span-2">
             <Link href="/" className="mb-4 inline-block group">
               <span className="text-2xl font-bold group-hover:text-accent transition-colors duration-300">
-                {companyInfo?.name || 'BWORK'}
+                {companyInfo?.name || 'Beyond Work'}
               </span>
             </Link>
             <p className="text-secondary-300 mb-6 max-w-sm">
@@ -107,20 +117,58 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Services Links */}
-          <div>
+          {/* Services Links - Dynamic with 2-column grid */}
+          <div className="lg:col-span-2">
             <h4 className="font-semibold mb-4">Services</h4>
-            <ul className="space-y-3">
-              {footerLinks.services.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-secondary-300 hover:text-accent transition-colors duration-200"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+              {services.length > 0 ? (
+                services.map((service) => (
+                  <li key={service.id}>
+                    <Link
+                      href={service.link}
+                      className="text-secondary-300 hover:text-accent transition-colors duration-200 text-sm block"
+                    >
+                      {service.title}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                // Fallback: show hardcoded services if API fails
+                <>
+                  <li>
+                    <Link
+                      href="/services/cloud-infrastructure"
+                      className="text-secondary-300 hover:text-accent transition-colors duration-200 text-sm block"
+                    >
+                      Cloud Infrastructure
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/services/active-networking"
+                      className="text-secondary-300 hover:text-accent transition-colors duration-200 text-sm block"
+                    >
+                      Network Solutions
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/services/passive-cabling"
+                      className="text-secondary-300 hover:text-accent transition-colors duration-200 text-sm block"
+                    >
+                      Structured Cabling
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/services/data-center"
+                      className="text-secondary-300 hover:text-accent transition-colors duration-200 text-sm block"
+                    >
+                      Data Center
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
 
@@ -146,7 +194,7 @@ export default function Footer() {
         <div className="border-t border-secondary-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
             <p className="text-secondary-400 text-sm">
-              &copy; {new Date().getFullYear()} {companyInfo?.name || 'BWORK'} Technologies. All rights reserved.
+              &copy; {new Date().getFullYear()} {companyInfo?.name || 'Beyond Work'} Company. All rights reserved.
             </p>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
               <Link href="/privacy-policy" className="text-secondary-400 hover:text-accent text-sm transition-colors">

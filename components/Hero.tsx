@@ -45,7 +45,7 @@ export default function Hero() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="text-lg text-secondary-600 mb-8 max-w-xl leading-relaxed"
             >
-              BWORK delivers enterprise-grade IT integration, cloud infrastructure, cybersecurity, and custom software solutions that drive digital transformation and business growth.
+              Beyond Work delivers enterprise-grade IT integration, cloud infrastructure, cybersecurity, and custom software solutions that drive digital transformation and business growth.
             </motion.p>
 
             <motion.div

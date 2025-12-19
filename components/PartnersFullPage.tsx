@@ -47,7 +47,7 @@ export default function PartnersFullPage() {
             >
               <h1 className="heading-xl mb-6">Technology Partners & Vendors</h1>
               <p className="text-xl text-secondary-200 leading-relaxed">
-                BWORK collaborates with industry-leading technology vendors to deliver best-in-class solutions.
+                Beyond Work collaborates with industry-leading technology vendors to deliver best-in-class solutions.
                 Our partnerships ensure you receive proven, enterprise-grade products backed by expert implementation and support.
               </p>
             </motion.div>

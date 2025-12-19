@@ -1,16 +1,21 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Terms of Service | Beyond Work - IT Solutions Saudi Arabia',
-  description: 'Terms of Service for Beyond Work. Review our terms and conditions for using our IT integration and technology solutions services in Saudi Arabia.',
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { fetchCompanyInfo, type CompanyInfo } from '@/lib/api';
 
 export default function TermsOfServicePage() {
+  const [companyInfo, setCompanyInfo] = useState<CompanyInfo | null>(null);
+
+  useEffect(() => {
+    const loadCompanyInfo = async () => {
+      const response = await fetchCompanyInfo();
+      if (response.success && response.data) {
+        setCompanyInfo(response.data);
+      }
+    };
+    loadCompanyInfo();
+  }, []);
   return (
     <div className="min-h-screen bg-gradient-to-b from-secondary-50 to-white">
       {/* Header */}
@@ -279,18 +284,18 @@ export default function TermsOfServicePage() {
                 <p className="text-secondary-900 font-semibold">Beyond Work</p>
                 <p className="text-secondary-700">
                   Email:{' '}
-                  <a href="mailto:legal@bwork.sa" className="text-primary-600 hover:underline">
-                    legal@bwork.sa
+                  <a href={`mailto:${companyInfo?.contact.email || 'support@bwork.sa'}`} className="text-primary-600 hover:underline">
+                    {companyInfo?.contact.email || 'support@bwork.sa'}
                   </a>
                 </p>
                 <p className="text-secondary-700">
                   Phone:{' '}
-                  <a href="tel:+966535083449" className="text-primary-600 hover:underline">
-                    +966 53 508 3449
+                  <a href={companyInfo?.contact.phoneLink || 'tel:+966535083449'} className="text-primary-600 hover:underline">
+                    {companyInfo?.contact.phoneFormatted || '+966 53 508 3449'}
                   </a>
                 </p>
                 <p className="text-secondary-700">
-                  Address: Khalid Bin Waleed Street, Malaz, Riyadh 12836, Saudi Arabia
+                  Address: {companyInfo?.office.addressLine1 || 'Malaz, Riyadh'}, {companyInfo?.office.addressLine2 || 'Khalid Bin Waleed Street, Jeddah'}
                 </p>
                 <p className="text-secondary-700">
                   Website:{' '}

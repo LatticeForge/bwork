@@ -1,30 +1,25 @@
 // Centralized Schema Generation Utilities for SEO
+import { CompanyInfo } from './api'
 
-interface LocalBusinessSchemaOptions {
-  name?: string
-  url?: string
-  description?: string
-}
-
-export function generateLocalBusinessSchema(options?: LocalBusinessSchemaOptions) {
+export function generateLocalBusinessSchema(companyInfo?: CompanyInfo) {
   return {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    name: options?.name || 'Beyond Work',
-    url: options?.url || 'https://bwork.sa',
+    name: companyInfo?.name || 'Beyond Work',
+    url: 'https://bwork.sa',
     logo: 'https://bwork.sa/images/logo.png',
     image: 'https://bwork.sa/images/bworkog.jpg',
     description:
-      options?.description ||
+      companyInfo?.tagline ||
       'Leading IT Integration and Technology Solutions provider in Saudi Arabia specializing in cloud infrastructure, cybersecurity, software development, and digital transformation.',
-    telephone: '+966535083449',
+    telephone: companyInfo?.contact.phone || '+966535083449',
     priceRange: '$$',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Khalid Bin Waleed Street, Malaz',
-      addressLocality: 'Riyadh',
+      streetAddress: `${companyInfo?.office.addressLine2 || 'Khalid Bin Waleed Street'}, ${companyInfo?.office.addressLine1?.split(',')[0] || 'Malaz'}`,
+      addressLocality: companyInfo?.office.city || 'Riyadh',
       addressRegion: 'Riyadh Province',
-      postalCode: '12836',
+      postalCode: companyInfo?.office.zip || '12836',
       addressCountry: 'SA',
     },
     geo: {
@@ -44,9 +39,9 @@ export function generateLocalBusinessSchema(options?: LocalBusinessSchemaOptions
     },
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+966535083449',
+      telephone: companyInfo?.contact.phone || '+966535083449',
       contactType: 'Customer Service',
-      email: 'support@bwork.sa',
+      email: companyInfo?.contact.email || 'support@bwork.sa',
       areaServed: 'SA',
       availableLanguage: ['English', 'Arabic'],
     },

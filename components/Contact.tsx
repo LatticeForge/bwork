@@ -171,7 +171,7 @@ export default function Contact() {
               Ready to Transform Your IT Infrastructure?
             </h2>
             <p className="text-lg text-secondary-600 mb-8">
-              Let's discuss your IT integration needs and how BWORK can help you achieve digital transformation and business growth.
+              Let's discuss your IT integration needs and how Beyond Work can help you achieve digital transformation and business growth.
             </p>
 
             {/* Contact Details */}
@@ -219,7 +219,30 @@ export default function Contact() {
                   </div>
                   <div>
                     <div className="font-semibold text-secondary-900 mb-1">{item.title}</div>
-                    <div className="text-secondary-600">{item.content}</div>
+                    {item.title === 'Office' ? (
+                      <div className="text-secondary-600">
+                        {companyInfo.office.addressLine1 && companyInfo.office.addressLine2 ? (
+                          <>
+                            <div>{companyInfo.office.addressLine1}</div>
+                            <div>{companyInfo.office.addressLine2}</div>
+                          </>
+                        ) : (
+                          // Split at "Riyadh " to separate into two lines
+                          (() => {
+                            const addr = companyInfo.office.fullAddress
+                            const splitIndex = addr.indexOf('Riyadh ') + 6
+                            return (
+                              <>
+                                <div>{addr.substring(0, splitIndex).trim()}</div>
+                                <div>{addr.substring(splitIndex).trim()}</div>
+                              </>
+                            )
+                          })()
+                        )}
+                      </div>
+                    ) : (
+                      <div className="text-secondary-600">{item.content}</div>
+                    )}
                   </div>
                 </motion.div>
               ))}

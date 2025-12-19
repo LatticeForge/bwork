@@ -78,8 +78,8 @@ const resources = [
   },
   {
     id: 6,
-    title: 'BWORK Company Brochure',
-    description: 'Comprehensive corporate brochure featuring all BWORK services, technology partnerships, case studies, and company credentials. Perfect for sharing with stakeholders and decision-makers.',
+    title: 'Beyond Work Company Brochure',
+    description: 'Comprehensive corporate brochure featuring all Beyond Work services, technology partnerships, case studies, and company credentials. Perfect for sharing with stakeholders and decision-makers.',
     category: 'Brochure',
     fileSize: '4.5 MB',
     pages: '28 pages',
