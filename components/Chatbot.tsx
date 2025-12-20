@@ -84,7 +84,7 @@ export default function Chatbot() {
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'}/api/chat-enquiry`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'}/chat-enquiry`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
