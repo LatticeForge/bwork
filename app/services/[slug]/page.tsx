@@ -25,11 +25,18 @@ async function getServiceBySlug(slug: string): Promise<Service | null> {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://apis.bwork.sa/api';
 
+    // Debug logging (development only)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Service] Fetching slug:', slug);
+      console.log('[Service] API URL:', `${apiUrl}/services`);
+    }
+
     const res = await fetch(`${apiUrl}/services`, {
       next: { revalidate: 60 }, // Revalidate every 60 seconds
     });
 
     if (!res.ok) {
+      console.error('[Service] API Error:', res.status, res.statusText);
       return null;
     }
 
@@ -37,11 +44,19 @@ async function getServiceBySlug(slug: string): Promise<Service | null> {
 
     if (data.success && data.data?.services) {
       const service = data.data.services.find((s: Service) => s.slug === slug);
+
+      if (!service && process.env.NODE_ENV === 'development') {
+        console.warn('[Service] Slug not found:', slug);
+        console.warn('[Service] Available slugs:',
+          data.data.services.map((s: Service) => s.slug));
+      }
+
       return service || null;
     }
 
     return null;
   } catch (error) {
+    console.error('[Service] Exception:', error);
     return null;
   }
 }

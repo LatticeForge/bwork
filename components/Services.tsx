@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { fetchServices, type Service } from '@/lib/api'
 import Loading from './Loading'
@@ -142,7 +143,7 @@ export default function Services() {
                     </li>
                   ))}
                 </ul>
-                <a href={service.link} className="text-accent font-semibold flex items-center gap-2 group mt-auto">
+                <Link href={service.link} className="text-accent font-semibold flex items-center gap-2 group mt-auto">
                   Learn More
                   <svg
                     className="w-5 h-5 group-hover:translate-x-1 transition-transform"
@@ -152,7 +153,7 @@ export default function Services() {
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-                </a>
+                </Link>
               </motion.div>
             )
           })}

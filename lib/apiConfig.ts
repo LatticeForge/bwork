@@ -4,7 +4,7 @@
  */
 
 export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://apis.bwork.sa";
+  process.env.NEXT_PUBLIC_API_URL || "https://apis.bwork.sa/api";
 
 export const API_ENDPOINTS = {
   // Public endpoints
