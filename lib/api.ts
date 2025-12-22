@@ -26,6 +26,7 @@ export interface Service {
   description: string;
   subServices: string[];
   link: string;
+  image?: string;
 }
 
 export interface ProcessStep {

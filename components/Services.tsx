@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { fetchServices, type Service } from '@/lib/api'
 import Loading from './Loading'
@@ -55,6 +56,11 @@ export default function Services() {
   const [services, setServices] = useState<Service[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({})
+
+  const handleImageError = (serviceId: number) => {
+    setImageErrors(prev => ({ ...prev, [serviceId]: true }))
+  }
 
   const loadServices = async () => {
     setLoading(true)
@@ -117,8 +123,6 @@ export default function Services() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => {
-            const icon = iconMap[service.slug] || iconMap['business-solutions']
-
             return (
               <motion.div
                 key={service.id}
@@ -127,33 +131,60 @@ export default function Services() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 whileHover={{ y: -8, boxShadow: '0 10px 40px rgba(30, 64, 175, 0.3)' }}
-                className="tech-card group"
+                className="service-card-with-image group overflow-hidden"
               >
-                <div className="w-14 h-14 bg-gradient-to-br from-accent/10 to-primary-100 rounded-xl flex items-center justify-center text-accent mb-4 group-hover:shadow-glow transition-all duration-300">
-                  {icon}
+                {/* Image Header Section */}
+                <div className="relative h-56 -mx-8 -mt-8 mb-6 overflow-hidden">
+                  {service.image && !imageErrors[service.id] ? (
+                    <>
+                      {/* Service Image */}
+                      <Image
+                        src={service.image}
+                        alt={`${service.title} - Beyond Work IT Solutions`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        loading="lazy"
+                        onError={() => handleImageError(service.id)}
+                      />
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/10" />
+                    </>
+                  ) : (
+                    /* Fallback gradient background when no image */
+                    <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-primary-100 to-accent/10" />
+                  )}
                 </div>
-                <h3 className="text-xl font-bold mb-4 group-hover:text-accent transition-colors">{service.title}</h3>
-                <ul className="space-y-2 mb-6">
-                  {service.subServices.map((subService, idx) => (
-                    <li key={idx} className="text-secondary-600 text-sm flex items-start gap-2">
-                      <svg className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <span>{subService}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link href={service.link} className="text-accent font-semibold flex items-center gap-2 group mt-auto">
-                  Learn More
-                  <svg
-                    className="w-5 h-5 group-hover:translate-x-1 transition-transform"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </Link>
+
+                {/* Content Section */}
+                <div className="flex flex-col flex-1">
+                  <h3 className="text-xl font-bold mb-4 group-hover:text-accent transition-colors">
+                    {service.title}
+                  </h3>
+
+                  <ul className="space-y-2 mb-6 flex-1">
+                    {service.subServices.map((subService, idx) => (
+                      <li key={idx} className="text-secondary-600 text-sm flex items-start gap-2">
+                        <svg className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>{subService}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Link href={service.link} className="text-accent font-semibold flex items-center gap-2 group mt-auto">
+                    Learn More
+                    <svg
+                      className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                </div>
               </motion.div>
             )
           })}

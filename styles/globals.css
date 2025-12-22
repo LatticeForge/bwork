@@ -119,6 +119,14 @@
     @apply bg-white rounded-2xl p-8 shadow-sm hover:shadow-tech transition-all duration-300 border border-secondary-100 hover:border-accent/30;
   }
 
+  /* Service card with image header */
+  .service-card-with-image {
+    @apply bg-white rounded-2xl p-8 shadow-sm hover:shadow-tech transition-all duration-300 border border-secondary-100 hover:border-accent/30;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+  }
+
   /* Gradient text */
   .gradient-text {
     @apply bg-gradient-to-r from-primary-600 to-accent bg-clip-text text-transparent;
