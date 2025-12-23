@@ -1,8 +1,10 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { getResponse, quickReplies, partners, responses } from '@/lib/chatbotKnowledge'
+import { createConversationEngine } from '@/lib/chatbot/conversationEngine'
+import { calculateTypingDelay, calculateFollowUpDelay } from '@/lib/chatbot/timing'
 
 interface Message {
   id: string
@@ -10,6 +12,8 @@ interface Message {
   sender: 'bot' | 'user'
   timestamp: Date
   downloads?: { name: string; url: string }[]
+  intent?: string
+  sentiment?: string
 }
 
 interface InquiryForm {
@@ -39,6 +43,9 @@ export default function Chatbot() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
 
+  // Initialize conversation engine (memoized to persist across renders)
+  const conversationEngine = useMemo(() => createConversationEngine(), [])
+
   // Initialize with greeting message
   useEffect(() => {
     addBotMessage(responses.greeting.message, responses.greeting.quickReplies)
@@ -51,6 +58,9 @@ export default function Chatbot() {
 
   const addBotMessage = (text: string, showReplies: boolean = false, downloads?: any[]) => {
     setIsTyping(true)
+    // Calculate dynamic typing delay based on message length
+    const typingDelay = calculateTypingDelay(text.length)
+
     setTimeout(() => {
       const newMessage: Message = {
         id: Date.now().toString(),
@@ -62,7 +72,7 @@ export default function Chatbot() {
       setMessages(prev => [...prev, newMessage])
       setIsTyping(false)
       setShowQuickReplies(showReplies)
-    }, 1000) // Simulate typing delay
+    }, typingDelay)
   }
 
   const addUserMessage = (text: string) => {
@@ -128,15 +138,57 @@ export default function Chatbot() {
     addUserMessage(textToSend)
     setInputValue('')
 
-    // Get bot response
-    const response = getResponse(textToSend)
+    // Process message through conversation engine
+    const botResponse = conversationEngine.processMessage(textToSend)
 
-    if (response.showForm) {
-      setShowInquiryForm(true)
-      addBotMessage(response.message, false)
-    } else {
-      addBotMessage(response.message, response.quickReplies || false, response.downloads)
-    }
+    // Calculate dynamic typing delay based on response length
+    const typingDelay = calculateTypingDelay(botResponse.response.length)
+
+    // Show typing indicator
+    setIsTyping(true)
+
+    // Send main response after typing delay
+    setTimeout(() => {
+      setIsTyping(false)
+
+      // Add bot message
+      const newMessage: Message = {
+        id: Date.now().toString(),
+        text: botResponse.response,
+        sender: 'bot',
+        timestamp: new Date(),
+        sentiment: botResponse.sentiment,
+      }
+      setMessages(prev => [...prev, newMessage])
+
+      // Update UI state
+      setShowQuickReplies(botResponse.shouldShowQuickReplies)
+      if (botResponse.shouldShowForm) {
+        setShowInquiryForm(true)
+      }
+
+      // Handle follow-up questions
+      if (botResponse.followUps && botResponse.followUps.length > 0) {
+        const followUpDelay = calculateFollowUpDelay()
+
+        // Send follow-up after a brief pause
+        setTimeout(() => {
+          setIsTyping(true)
+          const followUpTypingDelay = calculateTypingDelay(botResponse.followUps![0].length)
+
+          setTimeout(() => {
+            setIsTyping(false)
+            const followUpMessage: Message = {
+              id: (Date.now() + 1).toString(),
+              text: botResponse.followUps![0],
+              sender: 'bot',
+              timestamp: new Date(),
+            }
+            setMessages(prev => [...prev, followUpMessage])
+          }, followUpTypingDelay)
+        }, followUpDelay)
+      }
+    }, typingDelay)
   }
 
   const handleQuickReply = (value: string) => {
@@ -230,6 +282,7 @@ export default function Chatbot() {
 
   const handleClearChat = () => {
     setMessages([])
+    conversationEngine.resetContext()
     addBotMessage(responses.greeting.message, responses.greeting.quickReplies)
     setShowInquiryForm(false)
   }
