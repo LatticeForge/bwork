@@ -205,7 +205,7 @@ Our partnerships ensure you receive proven, enterprise-grade products backed by 
     quickReplies: true,
   },
   quote: {
-    message: "I'd be happy to help you request a consultation! You can reach us through:\n\n📧 Email: info@Beyond Work.sa\n📞 Phone: +966 11 123 4567\n🌐 Visit our Contact page for more options\n\nOur team will get back to you within 24 hours. What else can I help you with?",
+    message: "I'd be happy to help you request a consultation! You can reach us through:\n\n📧 Email: support@bwork.sa\n📞 Phone: +966 53 508 3449\n🌐 Visit our Contact page for more options\n\nOur team will get back to you within 24 hours. What else can I help you with?",
     quickReplies: true,
   },
   brochure: {
