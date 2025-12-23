@@ -306,7 +306,7 @@ export default function Chatbot() {
                   B
                 </div>
                 <div>
-                  <h3 className="font-semibold">BWORK AI Assistant</h3>
+                  <h3 className="font-semibold">Beyond Work AI Assistant</h3>
                   <div className="flex items-center space-x-1.5">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                     <p className="text-xs text-white/80">Online</p>
